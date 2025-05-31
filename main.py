@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, File, UploadFile, HTTPException, Depends, Request
+from fastapi import FastAPI, Query, File, UploadFile, HTTPException, Depends, Request, Form
 from supabase import create_client, Client
 from dotenv import load_dotenv
 import os
@@ -8,9 +8,13 @@ from collections import defaultdict
 import csv
 import io
 import logging
-from typing import Optional
+from typing import Optional, Dict, List, Set, Tuple
 from fastapi.security import APIKeyHeader
 from fastapi.responses import JSONResponse
+import json
+from difflib import SequenceMatcher
+import re
+from dateutil.parser import parse as parse_date
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -70,7 +74,7 @@ $$ LANGUAGE plpgsql;
 """
 
 ITEM_ANALYTICS_FUNCTION = """
-CREATE OR REPLACE FUNCTION get_item_analytics(start_date date, end_date date, item_limit integer)
+CREATE OR REPLACE FUNCTION get_item_analytics(start_date date, end_date date, item_limit integer, order_direction text)
 RETURNS TABLE (
     item_name text,
     total_quantity bigint,
@@ -170,46 +174,176 @@ load_dotenv()  # Loads variables from .env
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+print("DEBUG: SUPABASE_URL =", SUPABASE_URL)
+print("DEBUG: SUPABASE_KEY =", SUPABASE_KEY)
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = FastAPI()
 
-# --- Robust CSV Column Normalization ---
+# Enhanced column aliases with more variations and common POS system formats
 COLUMN_ALIASES = {
-    "Order ID": ["Order ID", "OrderID", "order id", "order_id", "Order-Id", "Order Id", "Orderid"],
-    "Order Date": ["Order Date", "order date", "order_date", "OrderDate"],
-    "Menu Item": ["Menu Item", "menu item", "MenuItem", "menu_item"],
-    "Menu Group": ["Menu Group", "menu group", "MenuGroup", "menu_group"],
-    "Menu Subgroup": ["Menu Subgroup", "menu subgroup", "MenuSubgroup", "menu_subgroup"],
-    "Sales Category": ["Sales Category", "sales category", "SalesCategory", "sales_category"],
-    "Gross Price": ["Gross Price", "gross price", "GrossPrice", "gross_price"],
-    "Discount": ["Discount", "discount"],
-    "Net Price": ["Net Price", "net price", "NetPrice", "net_price"],
-    "Quantity": ["Quantity", "quantity"],
-    "Tax": ["Tax", "tax"],
-    "Void?": ["Void?", "void?", "Void", "void"],
+    "Order ID": [
+        "Order ID", "OrderID", "order id", "order_id", "Order-Id", "Order Id", "Orderid",
+        "Transaction ID", "TransactionID", "transaction_id", "Transaction-Id",
+        "Receipt ID", "ReceiptID", "receipt_id", "Receipt-Id",
+        "Check ID", "CheckID", "check_id", "Check-Id"
+    ],
+    "Order Date": [
+        "Order Date", "order date", "order_date", "OrderDate",
+        "Transaction Date", "TransactionDate", "transaction_date",
+        "Receipt Date", "ReceiptDate", "receipt_date",
+        "Check Date", "CheckDate", "check_date",
+        "Date", "date"
+    ],
+    "Menu Item": [
+        "Menu Item", "menu item", "MenuItem", "menu_item",
+        "Item", "item", "Item Name", "ItemName", "item_name",
+        "Product", "product", "Product Name", "ProductName", "product_name",
+        "Description", "description", "Item Description", "ItemDescription"
+    ],
+    "Menu Group": [
+        "Menu Group", "menu group", "MenuGroup", "menu_group",
+        "Category", "category", "Item Category", "ItemCategory",
+        "Department", "department", "Item Department", "ItemDepartment",
+        "Group", "group"
+    ],
+    "Menu Subgroup": [
+        "Menu Subgroup", "menu subgroup", "MenuSubgroup", "menu_subgroup",
+        "Subcategory", "subcategory", "Item Subcategory", "ItemSubcategory",
+        "Subgroup", "subgroup", "Sub Group", "SubGroup"
+    ],
+    "Sales Category": [
+        "Sales Category", "sales category", "SalesCategory", "sales_category",
+        "Type", "type", "Item Type", "ItemType",
+        "Classification", "classification"
+    ],
+    "Gross Price": [
+        "Gross Price", "gross price", "GrossPrice", "gross_price",
+        "Price", "price", "Item Price", "ItemPrice",
+        "Regular Price", "RegularPrice", "regular_price",
+        "List Price", "ListPrice", "list_price",
+        "Gross Sales Price", "gross sales price", "gross_sales_price"
+    ],
+    "Discount": [
+        "Discount", "discount", "Discount Amount", "DiscountAmount",
+        "Discount Price", "DiscountPrice", "discount_price",
+        "Discount Value", "DiscountValue", "discount_value"
+    ],
+    "Net Price": [
+        "Net Price", "net price", "NetPrice", "net_price",
+        "Final Price", "FinalPrice", "final_price",
+        "Total Price", "TotalPrice", "total_price",
+        "Amount", "amount", "Total Amount", "TotalAmount",
+        "net sales price", "net_sales_price", "Net Sales Price", "Net sales price"
+    ],
+    "Quantity": [
+        "Quantity", "quantity", "Qty", "qty",
+        "Count", "count", "Item Count", "ItemCount",
+        "Number", "number", "Item Number", "ItemNumber"
+    ],
+    "Tax": [
+        "Tax", "tax", "Tax Amount", "TaxAmount",
+        "Tax Value", "TaxValue", "tax_value",
+        "Sales Tax", "SalesTax", "sales_tax",
+        "transaction tax", "Transaction Tax"
+    ],
+    "Void?": [
+        "Void?", "void?", "Void", "void",
+        "Voided", "voided", "Is Void", "IsVoid",
+        "Void Status", "VoidStatus", "void_status"
+    ]
 }
-REQUIRED_CANONICAL = set(COLUMN_ALIASES.keys())
 
-def normalize_headers(headers):
+# Required columns for the system to function
+REQUIRED_CANONICAL = {"Order ID", "Order Date", "Menu Item", "Net Price"}
+
+# Optional columns that enhance functionality
+OPTIONAL_CANONICAL = {"Menu Group", "Menu Subgroup", "Sales Category", "Gross Price", "Discount", "Quantity", "Tax", "Void?"}
+
+# Lower the default similarity threshold and add a secondary partial match check
+DEFAULT_SIMILARITY_THRESHOLD = 0.7
+
+def clean_column_name(name: str) -> str:
+    """Clean and standardize a column name for comparison."""
+    # Remove special characters and convert to lowercase
+    cleaned = re.sub(r'[^a-zA-Z0-9\s]', ' ', name)
+    # Remove extra spaces and convert to title case
+    cleaned = ' '.join(cleaned.split()).title()
+    return cleaned
+
+def get_similarity_score(str1: str, str2: str) -> float:
+    """Calculate similarity score between two strings."""
+    return SequenceMatcher(None, str1.lower(), str2.lower()).ratio()
+
+def find_best_match(column_name: str, aliases: Dict[str, List[str]]) -> Tuple[Optional[str], float]:
+    cleaned_name = clean_column_name(column_name)
+    best_match = None
+    best_score = 0.0
+    for canonical, alias_list in aliases.items():
+        for alias in alias_list:
+            score = get_similarity_score(cleaned_name, alias)
+            if score > best_score:
+                best_score = score
+                best_match = canonical
+    # If no good fuzzy match, try partial match
+    if best_score < DEFAULT_SIMILARITY_THRESHOLD:
+        for canonical, alias_list in aliases.items():
+            for alias in alias_list:
+                if cleaned_name in clean_column_name(alias) or clean_column_name(alias) in cleaned_name:
+                    return canonical, 0.7  # treat as a match with threshold
+    return best_match, best_score
+
+def normalize_headers(headers: List[str], similarity_threshold: float = DEFAULT_SIMILARITY_THRESHOLD) -> Dict[str, str]:
     normalized = {}
-    for h in headers:
-        clean = h.strip().replace("-", " ").replace("_", " ").title()
-        for canonical, aliases in COLUMN_ALIASES.items():
-            if clean in [a.title() for a in aliases]:
-                normalized[h] = canonical
-                break
+    unmatched = []
+    for header in headers:
+        best_match, score = find_best_match(header, COLUMN_ALIASES)
+        if best_match and score >= similarity_threshold:
+            normalized[header] = best_match
+        else:
+            unmatched.append(header)
+    if unmatched:
+        logging.warning(f"Unmatched columns in CSV: {unmatched}")
     return normalized
 
-def normalize_row(row, header_map):
+def validate_required_columns(found_canonicals: Set[str]) -> Tuple[bool, Set[str]]:
+    """
+    Validate that all required columns are present.
+    
+    Returns:
+        Tuple of (is_valid, missing_columns)
+    """
+    missing = REQUIRED_CANONICAL - found_canonicals
+    return len(missing) == 0, missing
+
+def normalize_row(row: Dict[str, str], header_map: Dict[str, str]) -> Dict[str, str]:
     normalized = {}
-    for k, v in row.items():
-        canonical = header_map.get(k, k)
-        normalized[canonical] = v
-    # Optionally, copy over any other columns as-is
-    for k, v in row.items():
-        if k not in normalized:
-            normalized[k] = v
+    for original_col, value in row.items():
+        if original_col in header_map:
+            canonical_col = header_map[original_col]
+            if value in ("", "N/A", "null", None):
+                value = None
+            if canonical_col in ["Order Date", "Transaction Date"]:
+                if value is not None:
+                    try:
+                        value = parse_date(value)
+                        if isinstance(value, datetime):
+                            value = value.isoformat()
+                    except Exception:
+                        value = None
+            if canonical_col in ["Gross Price", "Discount", "Net Price", "Tax"]:
+                try:
+                    value = float(value) if value is not None else 0.0
+                except (ValueError, TypeError):
+                    value = 0.0
+            elif canonical_col == "Quantity":
+                try:
+                    value = int(float(value)) if value is not None else 0
+                except (ValueError, TypeError):
+                    value = 0
+            elif canonical_col == "Void?":
+                value = str(value).lower() in ["true", "yes", "1", "y", "void"]
+            normalized[canonical_col] = value
     return normalized
 
 @app.get("/")
@@ -283,108 +417,145 @@ async def get_sales(request: Request, start_date: Optional[str] = Query(None), e
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/sales/heatmap")
-async def sales_heatmap(request: Request, start_date: str = Query(...), end_date: str = Query(...)):
+async def sales_heatmap(request: Request, start_date: str = Query(...), end_date: str = Query(...), category: str = Query("ALL")):
     try:
         start_dt, end_dt = validate_date_range(start_date, end_date)
+        params = {
+            'start_date': start_date,
+            'end_date': end_date,
+            'category': category
+        }
+        # Use the new function
         response = supabase.rpc(
-            "get_sales_heatmap",
-            {"start_date": start_date, "end_date": end_date}
+            "get_sales_heatmap_by_date",
+            params
         ).execute()
-        
         if not response.data:
             return {"data": [], "message": "No heatmap data available for the specified date range"}
-        return {"data": response.data}
+        
+        # Transform to {date, hours: [q0, q1, ..., q23]}
+        date_map = defaultdict(lambda: [0]*24)
+        for row in response.data:
+            date = row['date']
+            hour = row['hour_of_day']
+            qty = row['total_quantity']
+            date_map[date][hour] = qty
+        
+        # Convert to list of objects with date and hours array
+        result = [
+            {"date": date, "hours": hours}
+            for date, hours in sorted(date_map.items())
+        ]
+        return {"data": result}
     except Exception as e:
         logger.error(f"Error in /sales/heatmap endpoint: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/sales/items")
-async def get_item_analytics(request: Request, start_date: str = Query(...), end_date: str = Query(...), limit: int = Query(10, ge=1, le=50)):
+def get_item_analytics(
+    start_date: str = Query(...),
+    end_date: str = Query(...),
+    limit: int = Query(5, ge=1, le=50)
+):
+    params = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'item_limit': int(limit)
+    }
     try:
-        start, end = validate_date_range(start_date, end_date)
-        response = supabase.rpc(
-            'get_item_analytics',
-            {
-                'start_date': start.isoformat(),
-                'end_date': end.isoformat(),
-                'item_limit': limit
-            }
-        ).execute()
-        items = response.data if response.data else []
-        # Sort items by total_quantity descending for top, ascending for bottom
-        top_items = items[:limit]
-        bottom_items = items[-limit:][::-1] if len(items) >= limit else items[::-1]
-        total_items = len(items)
-        date_range = {"start": start.isoformat(), "end": end.isoformat()}
+        response = supabase.rpc('get_item_analytics', params).execute()
+        # Restore the expected response structure for the frontend
         return {
-            "top_items": top_items,
-            "bottom_items": bottom_items,
-            "total_items": total_items,
-            "date_range": date_range
+            "date_range": {
+                "start": start_date,
+                "end": end_date
+            },
+            "food": response.data.get("food", {"top_items": [], "bottom_items": []}),
+            "alcohol": response.data.get("alcohol", {"top_items": [], "bottom_items": []})
         }
     except Exception as e:
-        logger.error(f"Error in get_item_analytics: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Error in /sales/items endpoint: {str(e)}", exc_info=True)
+        return {
+            "date_range": {
+                "start": start_date,
+                "end": end_date
+            },
+            "food": {"top_items": [], "bottom_items": []},
+            "alcohol": {"top_items": [], "bottom_items": []},
+            "error": str(e)
+        }
 
 @app.get("/sales/trends")
-async def sales_trends(request: Request, start_date: str = Query(...), end_date: str = Query(...)):
+async def sales_trends(request: Request, start_date: str = Query(...), end_date: str = Query(...), category: str = Query("ALL")):
     try:
         start, end = validate_date_range(start_date, end_date)
+        params = {
+            'start_date': start.isoformat(),
+            'end_date': end.isoformat(),
+            'category': category
+        }
         response = supabase.rpc(
             'get_sales_trends',
-            {'start_date': start.isoformat(), 'end_date': end.isoformat()}
+            params
         ).execute()
-        
         if not response.data:
             return {"this_period": [], "prev_period": []}
-            
         # Transform the data into the format expected by the frontend
         this_period = []
         prev_period = []
         for row in response.data:
             this_period.append({
-                "date": row["date"],
-                "total_sales": row["total_sales"],
-                "order_count": row["order_count"],
-                "avg_order_value": row["avg_order_value"]
+                "week_start": row.get("week_start") or row.get("date"),
+                "total_sales": row.get("total_sales", 0)
             })
             prev_period.append({
-                "date": row["date"],
-                "total_sales": row["prev_period_sales"],
-                "order_count": row["prev_period_order_count"],
-                "avg_order_value": row["prev_period_avg_order_value"]
+                "week_start": row.get("week_start") or row.get("date"),
+                "total_sales": row.get("prev_period_sales", 0)
             })
-        
         return {"this_period": this_period, "prev_period": prev_period}
     except Exception as e:
         logger.error(f"Error in sales_trends: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/upload-csv")
-async def upload_csv(request: Request, file: UploadFile = File(...)):
+async def upload_csv(
+    request: Request,
+    file: UploadFile = File(...),
+    similarity_threshold: float = Query(0.8, ge=0.0, le=1.0)
+):
     if not file.filename.endswith('.csv'):
         raise HTTPException(
             status_code=400,
             detail="Only CSV files are allowed"
         )
+    
     try:
         contents = await file.read()
-        if len(contents) > 10 * 1024 * 1024:
+        if len(contents) > 10 * 1024 * 1024:  # 10MB limit
             raise HTTPException(
                 status_code=400,
                 detail="File size exceeds 10MB limit"
             )
+        
         decoded = contents.decode('utf-8')
         reader = csv.DictReader(io.StringIO(decoded))
-        header_map = normalize_headers(reader.fieldnames)
+        
+        # Normalize headers with fuzzy matching
+        header_map = normalize_headers(reader.fieldnames, similarity_threshold)
         found_canonicals = set(header_map.values())
-        missing = REQUIRED_CANONICAL - found_canonicals
-        if missing:
-            raise HTTPException(status_code=400, detail=f"CSV missing required columns: {missing}. Found: {reader.fieldnames}")
-        unknown = set(reader.fieldnames) - set(header_map.keys())
-        if unknown:
-            logging.warning(f"Unknown columns in CSV: {unknown}")
+        
+        # Validate required columns
+        is_valid, missing = validate_required_columns(found_canonicals)
+        if not is_valid:
+            raise HTTPException(
+                status_code=400,
+                detail=f"CSV missing required columns: {missing}. Found: {reader.fieldnames}"
+            )
+        
+        # Process rows
         rows = [normalize_row(row, header_map) for row in reader]
+        
+        # Check for duplicate orders
         existing_ids = set()
         if rows:
             order_ids = [row["Order ID"] for row in rows if row.get("Order ID")]
@@ -394,28 +565,31 @@ async def upload_csv(request: Request, file: UploadFile = File(...)):
                     resp = supabase.table("Zero CSV Data").select('"Order ID"').in_('"Order ID"', chunk).execute()
                     if hasattr(resp, 'data') and resp.data:
                         existing_ids.update([r["Order ID"] for r in resp.data if r.get("Order ID")])
+        
+        # Filter out duplicate orders
         new_rows = [row for row in rows if row.get("Order ID") not in existing_ids]
         skipped = len(rows) - len(new_rows)
+        
+        # Insert new rows in batches
         batch_size = 500
         for i in range(0, len(new_rows), batch_size):
             batch = new_rows[i:i+batch_size]
             if batch:
-                print("Batch keys:", batch[0].keys())
-            for row in batch:
-                for col in ["Gross Price", "Discount", "Net Price", "Tax"]:
-                    try:
-                        row[col] = float(row[col]) if row[col] not in (None, "") else 0.0
-                    except Exception:
-                        row[col] = 0.0
-                for col in ["Quantity"]:
-                    try:
-                        row[col] = int(float(row[col])) if row[col] not in (None, "") else 0
-                    except Exception:
-                        row[col] = 0
-            resp = supabase.table("Zero CSV Data").insert(batch).execute()
-            if getattr(resp, 'status_code', 200) >= 400:
-                raise HTTPException(status_code=500, detail=f"Supabase insert error: {getattr(resp, 'data', str(resp))}")
-        return {"message": f"Uploaded {len(new_rows)} new rows. Skipped {skipped} duplicate orders."}
+                resp = supabase.table("Zero CSV Data").insert(batch).execute()
+                if getattr(resp, 'status_code', 200) >= 400:
+                    raise HTTPException(
+                        status_code=500,
+                        detail=f"Supabase insert error: {getattr(resp, 'data', str(resp))}"
+                    )
+        
+        return {
+            "message": f"Uploaded {len(new_rows)} new rows. Skipped {skipped} duplicate orders.",
+            "column_mapping": header_map,
+            "found_columns": list(found_canonicals),
+            "missing_required": list(REQUIRED_CANONICAL - found_canonicals),
+            "missing_optional": list(OPTIONAL_CANONICAL - found_canonicals)
+        }
+        
     except Exception as e:
         logger.error(f"Error in /upload-csv endpoint: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -424,18 +598,31 @@ async def upload_csv(request: Request, file: UploadFile = File(...)):
 async def get_sales_summary(request: Request, start_date: str = Query(...), end_date: str = Query(...)):
     try:
         start, end = validate_date_range(start_date, end_date)
-        response = supabase.rpc(
-            'get_sales_summary',
-            {
-                'start_date': start.isoformat(),
-                'end_date': end.isoformat()
-            }
-        ).execute()
-        
-        if not response.data:
-            return {}
-            
-        return response.data[0] if response.data else {}
+        params_all = {
+            'start_date': start.isoformat(),
+            'end_date': end.isoformat(),
+            'category': 'ALL'
+        }
+        params_food = {
+            'start_date': start.isoformat(),
+            'end_date': end.isoformat(),
+            'category': 'Food'
+        }
+        params_alcohol = {
+            'start_date': start.isoformat(),
+            'end_date': end.isoformat(),
+            'category': 'Alcohol'
+        }
+        total_res = supabase.rpc('get_sales_summary', params_all).execute()
+        food_res = supabase.rpc('get_sales_summary', params_food).execute()
+        alcohol_res = supabase.rpc('get_sales_summary', params_alcohol).execute()
+        if not (total_res.data and food_res.data and alcohol_res.data):
+            return JSONResponse({"error": "No data found"}, status_code=404)
+        return {
+            "total": total_res.data[0],
+            "food": food_res.data[0],
+            "alcohol": alcohol_res.data[0]
+        }
     except Exception as e:
         logger.error(f"Error in get_sales_summary: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -483,3 +670,83 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Column mapping endpoints
+@app.get("/column-mappings")
+async def get_column_mappings():
+    try:
+        resp = supabase.table("Column Mappings").select("*").execute()
+        return resp.data
+    except Exception as e:
+        logger.error(f"Error fetching column mappings: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/column-mappings")
+async def create_column_mapping(
+    mapping_name: str = Form(...),
+    column_mapping: str = Form(...),
+    similarity_threshold: float = Form(0.8),
+    description: str = Form(None),
+    is_default: bool = Form(False)
+):
+    try:
+        # Parse the column mapping JSON
+        mapping_data = json.loads(column_mapping)
+        
+        # If this is set as default, unset any existing defaults
+        if is_default:
+            supabase.table("Column Mappings").update({"is_default": False}).eq("is_default", True).execute()
+        
+        # Create the new mapping
+        resp = supabase.table("Column Mappings").insert({
+            "mapping_name": mapping_name,
+            "column_mapping": mapping_data,
+            "similarity_threshold": similarity_threshold,
+            "description": description,
+            "is_default": is_default
+        }).execute()
+        
+        return resp.data[0]
+    except Exception as e:
+        logger.error(f"Error creating column mapping: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.put("/column-mappings/{mapping_id}")
+async def update_column_mapping(
+    mapping_id: str,
+    mapping_name: str = Form(None),
+    column_mapping: str = Form(None),
+    similarity_threshold: float = Form(None),
+    description: str = Form(None),
+    is_default: bool = Form(None)
+):
+    try:
+        update_data = {}
+        if mapping_name is not None:
+            update_data["mapping_name"] = mapping_name
+        if column_mapping is not None:
+            update_data["column_mapping"] = json.loads(column_mapping)
+        if similarity_threshold is not None:
+            update_data["similarity_threshold"] = similarity_threshold
+        if description is not None:
+            update_data["description"] = description
+        if is_default is not None:
+            if is_default:
+                # Unset any existing defaults
+                supabase.table("Column Mappings").update({"is_default": False}).eq("is_default", True).execute()
+            update_data["is_default"] = is_default
+        
+        resp = supabase.table("Column Mappings").update(update_data).eq("id", mapping_id).execute()
+        return resp.data[0]
+    except Exception as e:
+        logger.error(f"Error updating column mapping: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/column-mappings/{mapping_id}")
+async def delete_column_mapping(mapping_id: str):
+    try:
+        resp = supabase.table("Column Mappings").delete().eq("id", mapping_id).execute()
+        return {"message": "Mapping deleted successfully"}
+    except Exception as e:
+        logger.error(f"Error deleting column mapping: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
