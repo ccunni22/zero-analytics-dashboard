@@ -6,7 +6,8 @@ import {
   Tooltip,
   ResponsiveContainer,
   Area,
-  AreaChart
+  AreaChart,
+  TooltipProps
 } from 'recharts';
 import type { SalesTrends } from '../services/api';
 import { format, parseISO } from 'date-fns';
@@ -18,7 +19,9 @@ interface Props {
   granularity?: 'day' | 'week' | 'biweek' | 'month' | 'quarter';
 }
 
-function getTickFormat(granularity: string) {
+type TickFormatter = (period: string) => string;
+
+function getTickFormat(granularity: string): TickFormatter {
   switch (granularity) {
     case 'day':
       return (period: string) => {
@@ -46,6 +49,15 @@ function getTickFormat(granularity: string) {
   }
 }
 
+interface CustomTooltipProps extends TooltipProps<number, string> {
+  active?: boolean;
+  payload?: Array<{
+    value: number;
+    dataKey: string;
+  }>;
+  label?: string;
+}
+
 const SalesTrendsChart: React.FC<Props> = ({ data, granularity = 'week' }) => {
   const merged = (data.this_period || []).map((tp, i) => ({
     week_start: tp.week_start,
@@ -54,6 +66,25 @@ const SalesTrendsChart: React.FC<Props> = ({ data, granularity = 'week' }) => {
   }));
   const tickFormat = getTickFormat(granularity);
   const formatCurrency = (value: number) => `$${value.toFixed(2)}`;
+
+  const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
+    if (active && payload && payload.length && label) {
+      return (
+        <div className="bg-[rgba(16,24,39,0.95)] border border-[rgba(0,229,255,0.12)] rounded-[8px] p-3 shadow-[0_4px_24px_0_rgba(0,229,255,0.12)] backdrop-blur-[12px]">
+          <p className="text-[#E0F7FA] text-xs mb-1">{tickFormat(label)}</p>
+          <p className="text-[#00E5FF] text-xs">
+            This Period: {formatCurrency(payload[0]?.value ?? 0)}
+          </p>
+          {payload[1] && (
+            <p className="text-[#E0F7FA] text-xs">
+              Previous Period: {formatCurrency(payload[1].value ?? 0)}
+            </p>
+          )}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="w-full h-full min-h-[300px] flex flex-col">
@@ -87,22 +118,7 @@ const SalesTrendsChart: React.FC<Props> = ({ data, granularity = 'week' }) => {
             tickLine={{ stroke: 'rgba(224,247,250,0.2)' }}
           />
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(224,247,250,0.1)" />
-          <Tooltip 
-            content={({ active, payload, label }) => {
-              if (active && payload && payload.length) {
-                return (
-                  <div className="bg-[rgba(16,24,39,0.95)] border border-[rgba(0,229,255,0.12)] rounded-[8px] p-3 shadow-[0_4px_24px_0_rgba(0,229,255,0.12)] backdrop-blur-[12px]">
-                    <p className="text-[#E0F7FA] text-xs mb-1">{tickFormat(label)}</p>
-                    <p className="text-[#00E5FF] text-xs">This Period: {formatCurrency(typeof payload[0].value === 'number' ? payload[0].value : 0)}</p>
-                    {payload[1] && (
-                      <p className="text-[#E0F7FA] text-xs">Previous Period: {formatCurrency(typeof payload[1].value === 'number' ? payload[1].value : 0)}</p>
-                    )}
-                  </div>
-                );
-              }
-              return null;
-            }}
-          />
+          <Tooltip content={<CustomTooltip />} />
           <Area 
             type="monotone" 
             dataKey="this_period" 
