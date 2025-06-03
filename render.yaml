@@ -8,4 +8,6 @@ services:
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_KEY
-        sync: false 
+        sync: false
+      - key: FRONTEND_URL
+        value: https://zero-analytics-dashboard.vercel.app 

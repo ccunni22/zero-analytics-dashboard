@@ -176,26 +176,38 @@ load_dotenv()  # Loads variables from .env
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-print("DEBUG: SUPABASE_URL =", SUPABASE_URL)
-print("DEBUG: SUPABASE_KEY =", SUPABASE_KEY)
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise ValueError("Missing required environment variables: SUPABASE_URL and SUPABASE_KEY must be set")
+
+try:
+    supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    # Test the connection
+    supabase.table("Zero CSV Data").select("count", count="exact").limit(1).execute()
+except Exception as e:
+    logger.error(f"Failed to initialize Supabase client: {str(e)}")
+    raise
 
 app = FastAPI()
 
 # Configure CORS
+frontend_url = os.getenv("FRONTEND_URL", "https://zero-analytics-dashboard.vercel.app")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
         "http://localhost:5174",
         "http://localhost:5175",
-        "http://localhost:5176",
-        "http://localhost:5177",
-        os.getenv("FRONTEND_URL", "https://zero-analytics-dashboard.vercel.app")
+        "https://zero-analytics-dashboard.vercel.app",
+        "https://zero-analytics-dashboard-nvj4qq7pe.vercel.app",
+        "https://*.vercel.app",  # Allow all Vercel preview deployments
+        frontend_url  # Allow the configured frontend URL
     ],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+    expose_headers=["*"],  # Expose all headers
+    max_age=3600,  # Cache preflight requests for 1 hour
 )
 
 # Enhanced column aliases with more variations and common POS system formats
