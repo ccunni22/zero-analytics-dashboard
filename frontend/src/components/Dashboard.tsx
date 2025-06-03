@@ -5,18 +5,10 @@ import api from '../services/api';
 import SalesSummaryCard from './SalesSummaryCard';
 import SalesTrendsChart from './SalesTrendsChart';
 import SalesHeatmap from './SalesHeatmap';
-import ItemAnalyticsTable from './ItemAnalyticsTable';
 import DateRangePicker from './DateRangePicker';
 import CSVUpload from './CSVUpload';
 import DonutChart from './DonutChart';
 import DashboardCard from './common/DashboardCard';
-
-const widgetList = [
-  { key: 'summary', label: 'Summary' },
-  { key: 'trends', label: 'Trends' },
-  { key: 'heatmap', label: 'Heatmap' },
-  { key: 'items', label: 'Items' },
-];
 
 const Dashboard: React.FC = () => {
   const [startDate, setStartDate] = useState<string>(format(subDays(new Date(), 30), 'yyyy-MM-dd'));
@@ -29,8 +21,6 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showUpload, setShowUpload] = useState<boolean>(false);
-  const [expandedWidget, setExpandedWidget] = useState<string | null>(null);
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [granularity, setGranularity] = useState<'day' | 'week' | 'biweek' | 'month' | 'quarter'>('day');
   const [isCompact, setIsCompact] = useState<boolean>(window.innerWidth < 768);
 
@@ -45,7 +35,6 @@ const Dashboard: React.FC = () => {
 
   const fetchDashboardData = async () => {
     try {
-      setIsTransitioning(true);
       setLoading(true);
       setError(null);
       // Determine granularity
@@ -72,7 +61,6 @@ const Dashboard: React.FC = () => {
       console.error('Dashboard data fetch error:', err);
     } finally {
       setLoading(false);
-      setTimeout(() => setIsTransitioning(false), 300);
     }
   };
 
@@ -87,18 +75,18 @@ const Dashboard: React.FC = () => {
   // Dummy data for testing
   const dummyTrends = {
     this_period: [
-      { period: '2025-05-03', total_sales: 1000 },
-      { period: '2025-05-04', total_sales: 1200 },
-      { period: '2025-05-05', total_sales: 900 },
-      { period: '2025-05-06', total_sales: 1500 },
-      { period: '2025-05-07', total_sales: 1100 }
+      { week_start: '2025-05-03', total_sales: 1000 },
+      { week_start: '2025-05-04', total_sales: 1200 },
+      { week_start: '2025-05-05', total_sales: 900 },
+      { week_start: '2025-05-06', total_sales: 1500 },
+      { week_start: '2025-05-07', total_sales: 1100 }
     ],
     prev_period: [
-      { period: '2025-05-03', total_sales: 800 },
-      { period: '2025-05-04', total_sales: 950 },
-      { period: '2025-05-05', total_sales: 1000 },
-      { period: '2025-05-06', total_sales: 1200 },
-      { period: '2025-05-07', total_sales: 1050 }
+      { week_start: '2025-05-03', total_sales: 800 },
+      { week_start: '2025-05-04', total_sales: 950 },
+      { week_start: '2025-05-05', total_sales: 1000 },
+      { week_start: '2025-05-06', total_sales: 1200 },
+      { week_start: '2025-05-07', total_sales: 1050 }
     ]
   };
 
@@ -113,43 +101,6 @@ const Dashboard: React.FC = () => {
       .filter((item) => item.category === category && item.rank_type === rank)
       .slice(0, 5)
       .map((item) => ({ name: item.item_name, value: item.total_sales }));
-
-  // Widget renderers
-  const widgetRenderers: Record<string, React.ReactNode> = {
-    summary: salesSummary ? <SalesSummaryCard summary={salesSummary} /> : <div className="text-center text-gray-400">No summary data</div>,
-    trends: salesTrends && salesTrends.this_period && salesTrends.this_period.length > 0
-      ? <SalesTrendsChart data={salesTrends} startDate={startDate} endDate={endDate} granularity={granularity} />
-      : <div className="text-center text-gray-400">No trends data</div>,
-    heatmap: heatmapData && heatmapData.length > 0 ? <SalesHeatmap data={heatmapData} /> : <div className="text-center text-gray-400">No heatmap data</div>,
-    items: (
-      <div className="w-full max-w-4xl mx-auto grid grid-cols-2 gap-6 border-4 border-pink-500">
-        <div className="bg-gray-800/50 rounded-lg p-4">
-          <DonutChart
-            data={getDonutData('Food', 'Top')}
-            title="Top 5 Food Items"
-          />
-        </div>
-        <div className="bg-gray-800/50 rounded-lg p-4">
-          <DonutChart
-            data={getDonutData('Food', 'Bottom')}
-            title="Bottom 5 Food Items"
-          />
-        </div>
-        <div className="bg-gray-800/50 rounded-lg p-4">
-          <DonutChart
-            data={getDonutData('Alcohol', 'Top')}
-            title="Top 5 Alcohol Items"
-          />
-        </div>
-        <div className="bg-gray-800/50 rounded-lg p-4">
-          <DonutChart
-            data={getDonutData('Alcohol', 'Bottom')}
-            title="Bottom 5 Alcohol Items"
-          />
-        </div>
-      </div>
-    ),
-  };
 
   // Enhanced Modal component with animations
   const Modal: React.FC<{ children: React.ReactNode; onClose: () => void }> = ({ children, onClose }) => (

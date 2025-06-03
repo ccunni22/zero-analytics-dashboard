@@ -3,13 +3,12 @@ import React from 'react';
 interface DashboardCardProps {
   title?: string;
   children: React.ReactNode;
-  expanded?: boolean;
   className?: string;
   icon?: React.ReactNode;
   style?: React.CSSProperties;
 }
 
-const DashboardCard: React.FC<DashboardCardProps> = ({ title, children, expanded = false, className = '', icon, style }) => (
+const DashboardCard: React.FC<DashboardCardProps> = ({ title, children, className = '', icon, style }) => (
   <div className={`dashboard-card ${className || ''}`} style={{
     background: 'rgba(255,255,255,0.05)',
     backdropFilter: 'blur(18px)',

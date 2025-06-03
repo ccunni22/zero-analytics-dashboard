@@ -1,11 +1,4 @@
-import React from 'react';
-import type { SalesSummary } from '../services/api';
-
-interface Props {
-  summary: SalesSummary;
-}
-
-const SalesSummaryCard: React.FC<Props> = ({ summary }) => {
+const SalesSummaryCard: React.FC<Props> = ({ summary, interactive = false, compact = false }) => {
   return (
     <div className="w-full h-full flex flex-col">
       {/* KPI Grid Container */}
@@ -14,17 +7,15 @@ const SalesSummaryCard: React.FC<Props> = ({ summary }) => {
           {/* Total Sales */}
           <div className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-lg p-4 flex flex-col">
             <div className="text-sm text-[#E0F7FA] mb-1">Total Sales</div>
-            <div className="text-2xl font-bold text-[#00E5FF]">{typeof summary.total?.total_sales === 'number' ? summary.total.total_sales.toLocaleString() : '--'}</div>
+            <div className="text-2xl font-bold text-[#00E5FF]">{typeof summary.total === 'number' ? summary.total.toLocaleString() : '--'}</div>
           </div>
           {/* Total Orders */}
           <div className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-lg p-4 flex flex-col">
             <div className="text-sm text-[#E0F7FA] mb-1">Total Orders</div>
-            <div className="text-2xl font-bold text-[#00E5FF]">{typeof summary.total?.total_orders === 'number' ? summary.total.total_orders.toLocaleString() : '--'}</div>
+            <div className="text-2xl font-bold text-[#00E5FF]">{typeof summary.orders === 'number' ? summary.orders.toLocaleString() : '--'}</div>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default SalesSummaryCard; 
+}; 

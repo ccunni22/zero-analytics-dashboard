@@ -52,7 +52,7 @@ const SalesHeatmap: React.FC<Props> = ({ data, interactive = false }) => {
   // Get all unique days in the data, sorted
   const uniqueDays = Array.from(new Set(data.map(d => d.date))).sort();
   // Build a grid: rows = days, cols = 24 hours
-  const grid: number[][] = uniqueDays.map(day => Array(24).fill(0));
+  const grid: number[][] = uniqueDays.map(() => Array(24).fill(0));
   data.forEach(({ date, hour_of_day, total_quantity }) => {
     const rowIdx = uniqueDays.indexOf(date);
     if (rowIdx !== -1 && hour_of_day >= 0 && hour_of_day < 24) {
@@ -69,8 +69,8 @@ const SalesHeatmap: React.FC<Props> = ({ data, interactive = false }) => {
             <thead>
               <tr>
                 <th className="bg-[#111827]" style={{ width: 80, minWidth: 80, height: 32 }}></th>
-                {HOUR_LABELS.map((h, i) => (
-                  <th key={h} className="text-xs text-cyan-300 font-normal bg-[#111827] text-left" style={{ width: 24, minWidth: 24, height: 32 }}>{h}</th>
+                {HOUR_LABELS.map((h) => (
+                  <th key={h} className="text-xs text-cyan-200 font-normal text-center" style={{ width: 24, minWidth: 24 }}>{h}</th>
                 ))}
               </tr>
             </thead>

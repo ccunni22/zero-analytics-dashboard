@@ -182,6 +182,15 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = FastAPI()
 
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with your Vercel domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Enhanced column aliases with more variations and common POS system formats
 COLUMN_ALIASES = {
     "Order ID": [
@@ -672,24 +681,6 @@ async def export_sales(
     except Exception as e:
         logger.error(f"Error in /sales/export endpoint: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
-
-# Update CORS middleware to allow Vite dev server ports
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:5175",
-        "http://localhost:3000",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-        "http://127.0.0.1:5175",
-        "http://127.0.0.1:3000"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 # Column mapping endpoints
 @app.get("/column-mappings")

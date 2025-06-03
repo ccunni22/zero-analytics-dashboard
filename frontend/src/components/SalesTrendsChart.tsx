@@ -1,22 +1,18 @@
 import React from 'react';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   Area,
   AreaChart
 } from 'recharts';
 import type { SalesTrends } from '../services/api';
-import { format, parseISO, differenceInDays, differenceInMonths, addDays, addWeeks, addMonths, startOfWeek, startOfMonth, startOfQuarter } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 interface Props {
   data: SalesTrends;
-  interactive?: boolean;
   startDate?: string;
   endDate?: string;
   granularity?: 'day' | 'week' | 'biweek' | 'month' | 'quarter';
@@ -50,11 +46,11 @@ function getTickFormat(granularity: string) {
   }
 }
 
-const SalesTrendsChart: React.FC<Props> = ({ data, interactive = false, granularity = 'week' }) => {
+const SalesTrendsChart: React.FC<Props> = ({ data, granularity = 'week' }) => {
   const merged = (data.this_period || []).map((tp, i) => ({
-    period: tp.period,
-    this_period: tp.total_sales,
-    prev_period: data.prev_period?.[i]?.total_sales ?? null,
+    week_start: tp.week_start,
+    this_period: typeof tp.total_sales === 'number' ? tp.total_sales : 0,
+    prev_period: typeof data.prev_period?.[i]?.total_sales === 'number' ? data.prev_period[i].total_sales : 0,
   }));
   const tickFormat = getTickFormat(granularity);
   const formatCurrency = (value: number) => `$${value.toFixed(2)}`;
@@ -74,7 +70,7 @@ const SalesTrendsChart: React.FC<Props> = ({ data, interactive = false, granular
             </linearGradient>
           </defs>
           <XAxis 
-            dataKey="period" 
+            dataKey="week_start" 
             tickFormatter={tickFormat}
             stroke="#E0F7FA"
             strokeWidth={1}
@@ -97,9 +93,9 @@ const SalesTrendsChart: React.FC<Props> = ({ data, interactive = false, granular
                 return (
                   <div className="bg-[rgba(16,24,39,0.95)] border border-[rgba(0,229,255,0.12)] rounded-[8px] p-3 shadow-[0_4px_24px_0_rgba(0,229,255,0.12)] backdrop-blur-[12px]">
                     <p className="text-[#E0F7FA] text-xs mb-1">{tickFormat(label)}</p>
-                    <p className="text-[#00E5FF] text-xs">This Period: {formatCurrency(payload[0].value)}</p>
+                    <p className="text-[#00E5FF] text-xs">This Period: {formatCurrency(typeof payload[0].value === 'number' ? payload[0].value : 0)}</p>
                     {payload[1] && (
-                      <p className="text-[#E0F7FA] text-xs">Previous Period: {formatCurrency(payload[1].value)}</p>
+                      <p className="text-[#E0F7FA] text-xs">Previous Period: {formatCurrency(typeof payload[1].value === 'number' ? payload[1].value : 0)}</p>
                     )}
                   </div>
                 );
