@@ -1,0 +1,571 @@
+INFO:     Will watch for changes in these directories: ['/Users/chandlercunningham/zero-backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [74356] using WatchFiles
+INFO:     Started server process [74376]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+DEBUG: SUPABASE_URL = https://durondndjirozruiwaaf.supabase.co
+DEBUG: SUPABASE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1cm9uZG5kamlyb3pydWl3YWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc2ODM3NjAsImV4cCI6MjA2MzI1OTc2MH0.mkFcN6zmK6ztY6RLrN3Kg5PMyHk_iiajJnL8O3EWABA
+INFO:     127.0.0.1:64300 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64301 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64302 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64303 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64330 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64331 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64332 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64333 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:64346 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64347 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64348 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64349 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64346 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64347 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64348 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64349 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64400 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64401 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64402 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64403 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64446 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64447 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64448 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64449 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:     127.0.0.1:64489 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64490 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64491 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64493 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64527 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64529 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64530 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64531 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:64593 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64595 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64596 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64597 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:     127.0.0.1:64673 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64674 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64675 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64677 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64696 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64697 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64698 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64699 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:64865 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64867 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64868 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:64869 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:     127.0.0.1:64895 - "GET /sales/summary?start_date=2024-05-28&end_date=2025-05-28 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:65052 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65053 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65054 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:65055 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:65168 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65170 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65171 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:65172 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:65197 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65200 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:65202 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:65284 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65287 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65288 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:65289 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:65348 - "GET /sales/trends?start_date=2024-05-28&end_date=2025-05-28 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:65363 - "GET /sales/heatmap?start_date=2024-05-28&end_date=2025-05-28 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:65369 - "GET /sales/items?start_date=2024-05-28&end_date=2025-05-28 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:65476 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65477 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65478 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:65479 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:65535 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49152 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49154 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49153 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:49272 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49273 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49275 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49274 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49433 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49434 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49435 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49436 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49716 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49717 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49718 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49719 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49778 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49779 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49780 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49781 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49867 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49869 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49870 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49868 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49922 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49923 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49924 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49925 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:49982 - "GET /sales/summary?start_date=2024-11-01&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49983 - "GET /sales/trends?start_date=2024-11-01&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49984 - "GET /sales/heatmap?start_date=2024-11-01&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:49985 - "GET /sales/items?start_date=2024-11-01&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50018 - "GET /sales/summary?start_date=2024-11-01&end_date=2025-04-25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50019 - "GET /sales/trends?start_date=2024-11-01&end_date=2025-04-25&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /sales/heatmap?start_date=2024-11-01&end_date=2025-04-25&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50021 - "GET /sales/items?start_date=2024-11-01&end_date=2025-04-25&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:50099 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50100 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50101 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50102 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50157 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50158 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50161 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50162 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50268 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50269 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50270 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50271 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50271 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50268 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50269 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50270 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50271 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50268 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50269 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50270 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:50330 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50331 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50332 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50333 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50359 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50360 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50361 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50362 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50383 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50384 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50385 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50386 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:50447 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50449 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50450 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50448 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50558 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50559 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50560 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50561 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50635 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50636 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50637 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50638 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50725 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50726 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50727 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50728 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:50797 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50798 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50800 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50799 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:50866 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50867 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50869 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50868 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:50963 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50964 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50965 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:50966 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51278 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:51279 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51281 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51280 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51390 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51391 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51392 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51393 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51416 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51417 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51418 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51419 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51557 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51560 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51561 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51562 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51677 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51678 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51681 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51682 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51711 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:     127.0.0.1:51712 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51714 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51713 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51795 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51796 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51797 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51798 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51828 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51829 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51830 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51831 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_summary "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_trends "HTTP/2 200 OK"
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_sales_heatmap_by_date "HTTP/2 200 OK"
+INFO:     127.0.0.1:51877 - "GET /sales/summary?start_date=2025-05-03&end_date=2025-06-02 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51878 - "GET /sales/trends?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51879 - "GET /sales/heatmap?start_date=2025-05-03&end_date=2025-06-02&category=ALL HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://durondndjirozruiwaaf.supabase.co/rest/v1/rpc/get_item_analytics "HTTP/2 200 OK"
+INFO:     127.0.0.1:51880 - "GET /sales/items?start_date=2025-05-03&end_date=2025-06-02&limit=5 HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'frontend/node_modules/flatted/python/flatted.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [74376]
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/chandlercunningham/zero-backend/venv/lib/python3.9/site-packages/uvicorn/_subprocess.py", line 73, in subprocess_started
+    sys.stdin = os.fdopen(stdin_fileno)  # pragma: full coverage
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/os.py", line 1023, in fdopen
+    return io.open(fd, *args, **kwargs)
+OSError: [Errno 9] Bad file descriptor
+WARNING:  WatchFiles detected changes in 'frontend/node_modules/flatted/python/flatted.py'. Reloading...
+Process SpawnProcess-3:
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/chandlercunningham/zero-backend/venv/lib/python3.9/site-packages/uvicorn/_subprocess.py", line 73, in subprocess_started
+    sys.stdin = os.fdopen(stdin_fileno)  # pragma: full coverage
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/os.py", line 1023, in fdopen
+    return io.open(fd, *args, **kwargs)
+OSError: [Errno 9] Bad file descriptor
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+Process SpawnProcess-4:
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/chandlercunningham/zero-backend/venv/lib/python3.9/site-packages/uvicorn/_subprocess.py", line 73, in subprocess_started
+    sys.stdin = os.fdopen(stdin_fileno)  # pragma: full coverage
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/os.py", line 1023, in fdopen
+    return io.open(fd, *args, **kwargs)
+OSError: [Errno 9] Bad file descriptor
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+Process SpawnProcess-5:
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/chandlercunningham/zero-backend/venv/lib/python3.9/site-packages/uvicorn/_subprocess.py", line 73, in subprocess_started
+    sys.stdin = os.fdopen(stdin_fileno)  # pragma: full coverage
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/os.py", line 1023, in fdopen
+    return io.open(fd, *args, **kwargs)
+OSError: [Errno 9] Bad file descriptor
+INFO:     Stopping reloader process [74356]

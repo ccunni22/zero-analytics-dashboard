@@ -1,0 +1,134 @@
+@import './styles/animations.css';
+@import './theme.css';
+@import './styles/scrollbar.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove conflicting background and card styles */
+:root {
+  /* --primary-bg: #101024; */
+  /* --secondary-bg: #18182f; */
+  /* --accent-color: #0fa; */
+  /* --text-primary: #ffffff; */
+  /* --text-secondary: #a0aec0; */
+}
+
+body {
+  margin: 0;
+  background: #172133;
+  color: #e3eaf3;
+  min-height: 100vh;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background-color: var(--primary-bg); */
+  /* color: var(--text-primary); */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-bg);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d3748;
+}
+
+/* Base styles for dashboard elements */
+/* .dashboard-card {
+  @apply bg-[#18182f] rounded-xl shadow-lg border border-gray-800/50;
+  backdrop-filter: blur(10px);
+}
+
+.dashboard-card:hover {
+  @apply border-pink-500/50;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
+} */
+
+/* Neon text effect */
+/* .neon-text {
+  @apply text-white;
+  text-shadow: 0 0 5px #fff,
+               0 0 10px #fff,
+               0 0 20px #0fa,
+               0 0 30px #0fa,
+               0 0 40px #0fa;
+} */
+
+/* Gradient backgrounds */
+/* .gradient-bg {
+  @apply bg-gradient-to-r from-pink-500 to-blue-500;
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+} */
+
+/* Loading states */
+.loading-spinner {
+  @apply animate-spin rounded-full border-2 border-pink-500 border-t-transparent;
+}
+
+/* Modal styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black/80 backdrop-blur-sm;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.modal-content {
+  @apply bg-[#18182f] rounded-2xl shadow-2xl;
+  animation: modalFadeIn 0.3s ease-out forwards;
+}
+
+/* Chart container styles */
+.chart-container {
+  @apply w-full h-full flex-1 min-h-0;
+  animation: chartFadeIn 0.5s ease-out forwards;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply px-4 py-2 bg-gradient-to-r from-pink-500 to-blue-500 text-white rounded-lg shadow 
+         hover:from-blue-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-gray-800 text-white rounded-lg shadow 
+         hover:bg-gray-700 transition-all duration-300 transform hover:scale-105;
+}
+
+/* Input styles */
+.input-primary {
+  @apply px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 
+         focus:border-pink-500 focus:ring-1 focus:ring-pink-500 outline-none transition-all duration-300;
+}
+
+/* Table styles */
+.table-primary {
+  @apply w-full border-collapse;
+}
+
+.table-primary th {
+  @apply px-4 py-2 text-left bg-gray-800 text-gray-300 font-medium;
+}
+
+.table-primary td {
+  @apply px-4 py-2 border-t border-gray-800;
+}
+
+.table-primary tr:hover {
+  @apply bg-gray-800/50;
+}

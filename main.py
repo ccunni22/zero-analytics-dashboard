@@ -15,6 +15,8 @@ import json
 from difflib import SequenceMatcher
 import re
 from dateutil.parser import parse as parse_date
+from dateutil.relativedelta import relativedelta
+import calendar
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -366,20 +368,24 @@ def validate_date_range(start_date: str, end_date: str) -> tuple[datetime, datet
     try:
         start_dt = datetime.fromisoformat(start_date)
         end_dt = datetime.fromisoformat(end_date)
-        
+        today = datetime.now().date()
         if end_dt < start_dt:
             raise HTTPException(
                 status_code=400,
                 detail="End date must be after start date"
             )
-        
+        # Prevent future dates
+        if end_dt.date() > today:
+            raise HTTPException(
+                status_code=400,
+                detail="End date cannot be in the future"
+            )
         # Limit date range to 1 year
         if (end_dt - start_dt).days > 365:
             raise HTTPException(
                 status_code=400,
                 detail="Date range cannot exceed 1 year"
             )
-            
         return start_dt, end_dt
     except ValueError:
         raise HTTPException(
@@ -486,18 +492,23 @@ def get_item_analytics(
         }
 
 @app.get("/sales/trends")
-async def sales_trends(request: Request, start_date: str = Query(...), end_date: str = Query(...), category: str = Query("ALL")):
+async def sales_trends(
+    request: Request,
+    start_date: str = Query(...),
+    end_date: str = Query(...),
+    category: str = Query("ALL"),
+    granularity: str = Query("week", regex="^(day|week|biweek|month|quarter)$")
+):
     try:
         start, end = validate_date_range(start_date, end_date)
         params = {
-            'start_date': start.isoformat(),
-            'end_date': end.isoformat(),
-            'category': category
+            'start_date': start.date().isoformat(),
+            'end_date': end.date().isoformat(),
+            'category': category,
+            'granularity': granularity
         }
-        response = supabase.rpc(
-            'get_sales_trends',
-            params
-        ).execute()
+        print("DEBUG: Params sent to get_sales_trends:", params)
+        response = supabase.rpc('get_sales_trends', params).execute()
         if not response.data:
             return {"this_period": [], "prev_period": []}
         # Transform the data into the format expected by the frontend
@@ -505,11 +516,11 @@ async def sales_trends(request: Request, start_date: str = Query(...), end_date:
         prev_period = []
         for row in response.data:
             this_period.append({
-                "week_start": row.get("week_start") or row.get("date"),
+                "period": row.get("period"),
                 "total_sales": row.get("total_sales", 0)
             })
             prev_period.append({
-                "week_start": row.get("week_start") or row.get("date"),
+                "period": row.get("period"),
                 "total_sales": row.get("prev_period_sales", 0)
             })
         return {"this_period": this_period, "prev_period": prev_period}
@@ -662,10 +673,19 @@ async def export_sales(
         logger.error(f"Error in /sales/export endpoint: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
 
-# Ensure this is present and correct:
+# Update CORS middleware to allow Vite dev server ports
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

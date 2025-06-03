@@ -1,56 +1,64 @@
 CREATE OR REPLACE FUNCTION get_sales_trends(
     start_date DATE,
     end_date DATE,
-    category TEXT
+    category TEXT,
+    granularity TEXT
 )
 RETURNS TABLE (
-    week_start DATE,
+    period TEXT,
     total_sales NUMERIC,
     prev_period_sales NUMERIC
 )
 AS $$
 DECLARE
-    num_weeks INTEGER;
     prev_start DATE;
     prev_end DATE;
+    interval_str TEXT;
+    trunc_str TEXT;
 BEGIN
-    -- Calculate number of weeks in the selected range
-    num_weeks := FLOOR(EXTRACT(DAY FROM date_trunc('week', end_date) - date_trunc('week', start_date)) / 7) + 1;
-    prev_start := date_trunc('week', start_date) - (num_weeks * INTERVAL '1 week');
-    prev_end := date_trunc('week', start_date) - INTERVAL '1 week';
+    -- Determine interval and truncation based on granularity
+    IF granularity = 'day' THEN
+        interval_str := '1 day';
+        trunc_str := 'day';
+    ELSIF granularity = 'week' THEN
+        interval_str := '1 week';
+        trunc_str := 'week';
+    ELSIF granularity = 'biweek' THEN
+        interval_str := '2 week';
+        trunc_str := 'week';
+    ELSIF granularity = 'month' THEN
+        interval_str := '1 month';
+        trunc_str := 'month';
+    ELSIF granularity = 'quarter' THEN
+        interval_str := '3 month';
+        trunc_str := 'quarter';
+    ELSE
+        interval_str := '1 week';
+        trunc_str := 'week';
+    END IF;
+
+    -- Calculate previous period range
+    prev_start := date_trunc(trunc_str, start_date) - (date_trunc(trunc_str, end_date) - date_trunc(trunc_str, start_date)) - INTERVAL '1 ' || trunc_str;
+    prev_end := date_trunc(trunc_str, start_date) - INTERVAL '1 ' || trunc_str;
 
     RETURN QUERY
-    WITH
-    weeks AS (
-        SELECT
-            generate_series(
-                date_trunc('week', start_date)::date,
-                date_trunc('week', end_date)::date,
-                INTERVAL '1 week'
-            )::date AS week_start
+    WITH periods AS (
+        SELECT generate_series(
+            date_trunc(trunc_str, start_date)::date,
+            date_trunc(trunc_str, end_date)::date,
+            interval_str::interval
+        ) AS period_start
     ),
-    weeks_with_offsets AS (
-        SELECT
-            weeks.week_start,
-            ROW_NUMBER() OVER (ORDER BY weeks.week_start) - 1 AS week_offset
-        FROM weeks
-    ),
-    prev_weeks AS (
-        SELECT
-            prev_weeks_inner.week_start AS prev_week_start,
-            ROW_NUMBER() OVER (ORDER BY prev_weeks_inner.week_start) - 1 AS week_offset
-        FROM (
-            SELECT
-                generate_series(
-                    prev_start::date,
-                    prev_end::date,
-                    INTERVAL '1 week'
-                )::date AS week_start
-        ) AS prev_weeks_inner
+    prev_periods AS (
+        SELECT generate_series(
+            prev_start::date,
+            prev_end::date,
+            interval_str::interval
+        ) AS period_start
     ),
     this_period AS (
-        SELECT
-            date_trunc('week', "Order Date")::date AS week_start,
+        SELECT 
+            date_trunc(trunc_str, "Order Date")::date AS period_start,
             SUM("Net Price") AS total_sales
         FROM "Zero CSV Data"
         WHERE "Order Date" BETWEEN start_date AND end_date
@@ -58,11 +66,11 @@ BEGIN
             LOWER(category) = 'all'
             OR "Sales Category" = category
           )
-        GROUP BY date_trunc('week', "Order Date")::date
+        GROUP BY date_trunc(trunc_str, "Order Date")
     ),
     prev_period AS (
-        SELECT
-            date_trunc('week', "Order Date")::date AS week_start,
+        SELECT 
+            date_trunc(trunc_str, "Order Date")::date AS period_start,
             SUM("Net Price") AS prev_period_sales
         FROM "Zero CSV Data"
         WHERE "Order Date" BETWEEN prev_start AND prev_end
@@ -70,16 +78,25 @@ BEGIN
             LOWER(category) = 'all'
             OR "Sales Category" = category
           )
-        GROUP BY date_trunc('week', "Order Date")::date
+        GROUP BY date_trunc(trunc_str, "Order Date")
     )
-    SELECT
-        wwo.week_start,
+    SELECT 
+        to_char(p.period_start, 
+            CASE 
+                WHEN granularity = 'day' THEN 'YYYY-MM-DD'
+                WHEN granularity = 'week' THEN 'YYYY-MM-DD'
+                WHEN granularity = 'biweek' THEN 'YYYY-MM-DD'
+                WHEN granularity = 'month' THEN 'YYYY-MM'
+                WHEN granularity = 'quarter' THEN 'YYYY-"Q"Q'
+                ELSE 'YYYY-MM-DD'
+            END
+        ) AS period,
         COALESCE(tp.total_sales, 0) AS total_sales,
         COALESCE(pp.prev_period_sales, 0) AS prev_period_sales
-    FROM weeks_with_offsets wwo
-    LEFT JOIN this_period tp ON tp.week_start = wwo.week_start
-    LEFT JOIN prev_weeks pw ON wwo.week_offset = pw.week_offset
-    LEFT JOIN prev_period pp ON pw.prev_week_start = pp.week_start
-    ORDER BY wwo.week_start;
+    FROM periods p
+    LEFT JOIN this_period tp ON tp.period_start = p.period_start
+    LEFT JOIN prev_periods ppd ON p.period_start - date_trunc(trunc_str, start_date) = ppd.period_start - prev_start
+    LEFT JOIN prev_period pp ON pp.period_start = ppd.period_start
+    ORDER BY p.period_start;
 END;
 $$ LANGUAGE plpgsql; 
