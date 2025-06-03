@@ -60,7 +60,7 @@ interface CustomTooltipProps extends TooltipProps<number, string> {
 
 const SalesTrendsChart: React.FC<Props> = ({ data, granularity = 'week' }) => {
   const merged = (data.this_period || []).map((tp, i) => ({
-    week_start: tp.week_start,
+    period: tp.period,
     this_period: typeof tp.total_sales === 'number' ? tp.total_sales : 0,
     prev_period: typeof data.prev_period?.[i]?.total_sales === 'number' ? data.prev_period[i].total_sales : 0,
   }));
@@ -101,7 +101,7 @@ const SalesTrendsChart: React.FC<Props> = ({ data, granularity = 'week' }) => {
             </linearGradient>
           </defs>
           <XAxis 
-            dataKey="week_start" 
+            dataKey="period" 
             tickFormatter={tickFormat}
             stroke="#E0F7FA"
             strokeWidth={1}
