@@ -9,6 +9,7 @@ import DateRangePicker from './DateRangePicker';
 import CSVUpload from './CSVUpload';
 import DonutChart from './DonutChart';
 import DashboardCard from './common/DashboardCard';
+import '../styles/theme.css';
 
 const Dashboard: React.FC = () => {
   const [startDate, setStartDate] = useState<string>(format(subDays(new Date(), 30), 'yyyy-MM-dd'));
@@ -37,7 +38,6 @@ const Dashboard: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      // Determine granularity
       const days = differenceInDays(parseISO(endDate), parseISO(startDate)) + 1;
       let newGranularity: 'day' | 'week' | 'biweek' | 'month' | 'quarter';
       if (days <= 7) newGranularity = 'day';
@@ -46,12 +46,14 @@ const Dashboard: React.FC = () => {
       else if (days <= 366) newGranularity = 'month';
       else newGranularity = 'quarter';
       setGranularity(newGranularity);
+      
       const [summary, trends, heatmap, items] = await Promise.all([
         api.getSalesSummary(startDate, endDate),
         api.getSalesTrends(startDate, endDate, category, newGranularity),
         api.getSalesHeatmap(startDate, endDate, category),
         api.getItemAnalytics(startDate, endDate)
       ]);
+      
       setSalesSummary(summary);
       setSalesTrends(trends);
       setHeatmapData(heatmap);
@@ -68,204 +70,95 @@ const Dashboard: React.FC = () => {
     fetchDashboardData();
   }, [startDate, endDate, category]);
 
-  useEffect(() => {
-    console.log('Sales Trends Data:', salesTrends);
-  }, [salesTrends]);
-
-  // Dummy data for testing
-  const dummyTrends = {
-    this_period: [
-      { week_start: '2025-05-03', total_sales: 1000 },
-      { week_start: '2025-05-04', total_sales: 1200 },
-      { week_start: '2025-05-05', total_sales: 900 },
-      { week_start: '2025-05-06', total_sales: 1500 },
-      { week_start: '2025-05-07', total_sales: 1100 }
-    ],
-    prev_period: [
-      { week_start: '2025-05-03', total_sales: 800 },
-      { week_start: '2025-05-04', total_sales: 950 },
-      { week_start: '2025-05-05', total_sales: 1000 },
-      { week_start: '2025-05-06', total_sales: 1200 },
-      { week_start: '2025-05-07', total_sales: 1050 }
-    ]
-  };
-
-  const handleDateRangeChange = (start: string, end: string) => {
-    setStartDate(start);
-    setEndDate(end);
-  };
-
-  // Helper to get top/bottom 5 for each category
-  const getDonutData = (category: string, rank: string) =>
-    (itemAnalytics || [])
-      .filter((item) => item.category === category && item.rank_type === rank)
-      .slice(0, 5)
-      .map((item) => ({ name: item.item_name, value: item.total_sales }));
-
-  // Enhanced Modal component with animations
-  const Modal: React.FC<{ children: React.ReactNode; onClose: () => void }> = ({ children, onClose }) => (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300"
-      onClick={onClose}
-    >
-      <div 
-        className="relative w-full max-w-4xl h-[80vh] bg-[#18182f] rounded-2xl shadow-2xl p-8 flex flex-col transform transition-all duration-300 scale-100 hover:scale-[1.02]"
-        onClick={e => e.stopPropagation()}
-      >
-        <button
-          className="absolute top-4 right-4 text-white text-2xl hover:text-pink-400 transition-colors z-10"
-          onClick={onClose}
-        >
-          &times;
-        </button>
-        <div className="flex-1 flex flex-col justify-center items-center">{children}</div>
-      </div>
-    </div>
-  );
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#101024]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-pink-500"></div>
-          <p className="text-white text-lg">Loading dashboard data...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-[#101024]">
-        <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-6 text-center">
-          <p className="text-red-400 text-lg mb-2">{error}</p>
-          <button 
-            onClick={fetchDashboardData}
-            className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-colors"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-[#101827] px-8 py-4 flex flex-col">
-      {/* Top bar: Title and Upload */}
-      <div className="w-full mb-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-        <h1 className="text-2xl font-bold text-white tracking-wide uppercase text-left">Sales Analytics Dashboard</h1>
-        <button
-          onClick={() => setShowUpload(!showUpload)}
-          className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-semibold transition-all duration-200 border-none hover:from-cyan-400 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          style={{ minWidth: 140 }}
-        >
-          {showUpload ? 'Hide Upload' : 'Upload Data'}
-        </button>
-      </div>
-      {/* Filters: Category Selector and Date Range Picker */}
-      <div className="w-full mb-4 grid grid-cols-12 gap-x-6 items-center">
-        <div className="col-span-3 flex flex-row gap-4 items-center">
-          <label className="text-gray-300 font-medium uppercase text-left">Category:</label>
-          <div className="relative w-full max-w-[160px]">
-            <select
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-              className="appearance-none w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.06)] text-[#E0E0E0] px-4 py-2 rounded-[8px] pr-8 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400 outline-none transition-colors text-sm font-medium backdrop-blur-[10px]"
-              style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
-            >
-              <option value="ALL">All</option>
-              <option value="FOOD">Food</option>
-              <option value="ALCOHOL">Alcohol</option>
-            </select>
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400">
-              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
-            </span>
-          </div>
-        </div>
-        <div className="col-span-9">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--color-bg-dark)] to-[var(--color-bg-light)] text-[var(--color-text-primary)]">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Zero Analytics Dashboard</h1>
           <DateRangePicker
             startDate={startDate}
             endDate={endDate}
-            onDateRangeChange={handleDateRangeChange}
+            onDateChange={(start, end) => {
+              setStartDate(start);
+              setEndDate(end);
+            }}
           />
         </div>
+
+        <div className="grid-container">
+          {/* Sales Summary Cards */}
+          <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <DashboardCard className="glass-card">
+              <SalesSummaryCard summary={salesSummary?.total} title="Total Sales" />
+            </DashboardCard>
+            <DashboardCard className="glass-card">
+              <SalesSummaryCard summary={salesSummary?.food} title="Food Sales" />
+            </DashboardCard>
+            <DashboardCard className="glass-card">
+              <SalesSummaryCard summary={salesSummary?.alcohol} title="Alcohol Sales" />
+            </DashboardCard>
+          </div>
+
+          {/* Sales Trends */}
+          <div className="col-span-12 md:col-span-8">
+            <DashboardCard className="glass-card">
+              <div className="section-header">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                </svg>
+                Sales Trends
+              </div>
+              <SalesTrendsChart
+                data={salesTrends}
+                granularity={granularity}
+                loading={loading}
+              />
+            </DashboardCard>
+          </div>
+
+          {/* Sales Heatmap */}
+          <div className="col-span-12 md:col-span-4">
+            <DashboardCard className="glass-card">
+              <div className="section-header">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Sales Heatmap
+              </div>
+              <SalesHeatmap data={heatmapData} loading={loading} />
+            </DashboardCard>
+          </div>
+
+          {/* Item Analytics */}
+          <div className="col-span-12">
+            <DashboardCard className="glass-card">
+              <div className="section-header">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Top Items
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {itemAnalytics.map((item, index) => (
+                  <div key={index} className="glass-card p-4">
+                    <h3 className="text-sm font-semibold mb-2">{item.item_name}</h3>
+                    <div className="flex justify-between text-xs text-[var(--color-text-secondary)]">
+                      <span>Quantity: {item.total_quantity}</span>
+                      <span>Sales: ${item.total_sales.toFixed(2)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </DashboardCard>
+          </div>
+        </div>
+
+        {error && (
+          <div className="fixed bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg">
+            {error}
+          </div>
+        )}
       </div>
-      {/* Main Grid */}
-      <div className="w-full grid grid-cols-12 gap-4 mb-4 mt-2">
-        {/* Top Row: Sales Summary (4) + Sales Trends (8) */}
-        <div className="col-span-12 md:col-span-4 flex items-stretch h-[400px]">
-          <DashboardCard title="SALES SUMMARY" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8" strokeLinecap="round" strokeLinejoin="round"/></svg>}>
-            {salesSummary ? <SalesSummaryCard summary={salesSummary} /> : <div className="text-center text-gray-400">No summary data</div>}
-          </DashboardCard>
-        </div>
-        <div className="col-span-12 md:col-span-8 flex items-stretch h-[400px]">
-          <DashboardCard title="SALES TRENDS" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8" strokeLinecap="round" strokeLinejoin="round"/></svg>}>
-            {(salesTrends && salesTrends.this_period && salesTrends.this_period.length > 0)
-              ? <SalesTrendsChart data={salesTrends} startDate={startDate} endDate={endDate} granularity={granularity} />
-              : <SalesTrendsChart data={dummyTrends} startDate={startDate} endDate={endDate} granularity={granularity} />}
-          </DashboardCard>
-        </div>
-        {/* Heatmap: Full width */}
-        <div className="col-span-12 flex items-stretch h-[500px]">
-          <DashboardCard title="SALES HEATMAP" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 8h8v8H8z"/></svg>}>
-            {heatmapData && heatmapData.length > 0 ? <SalesHeatmap data={heatmapData} /> : <div className="text-center text-gray-400">No heatmap data</div>}
-          </DashboardCard>
-        </div>
-        {/* Donut Charts: 4 in a row */}
-        <div className="col-span-12 grid grid-cols-12 gap-4 gap-y-4 mb-4 mt-2">
-          <div className="col-span-12 sm:col-span-6 md:col-span-3 flex items-stretch h-[300px] min-h-[300px]">
-            <DashboardCard title="TOP 5 FOOD ITEMS" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>}>
-              <DonutChart 
-                data={getDonutData('Food', 'Top')} 
-                title="Top 5 Food Items" 
-                interactive={true} 
-                showTitle={false}
-                compact={isCompact}
-              />
-            </DashboardCard>
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-3 flex items-stretch h-[300px] min-h-[300px]">
-            <DashboardCard title="TOP 5 ALCOHOL ITEMS" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>}>
-              <DonutChart 
-                data={getDonutData('Alcohol', 'Top')} 
-                title="Top 5 Alcohol Items" 
-                interactive={true} 
-                showTitle={false}
-                compact={isCompact}
-              />
-            </DashboardCard>
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-3 flex items-stretch h-[300px] min-h-[300px]">
-            <DashboardCard title="BOTTOM 5 FOOD ITEMS" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>}>
-              <DonutChart 
-                data={getDonutData('Food', 'Bottom')} 
-                title="Bottom 5 Food Items" 
-                interactive={true} 
-                showTitle={false}
-                compact={isCompact}
-              />
-            </DashboardCard>
-          </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-3 flex items-stretch h-[300px] min-h-[300px]">
-            <DashboardCard title="BOTTOM 5 ALCOHOL ITEMS" className="w-full" icon={<svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>}>
-              <DonutChart 
-                data={getDonutData('Alcohol', 'Bottom')} 
-                title="Bottom 5 Alcohol Items" 
-                interactive={true} 
-                showTitle={false}
-                compact={isCompact}
-              />
-            </DashboardCard>
-          </div>
-        </div>
-      </div>
-      {/* CSV Upload Modal */}
-      {showUpload && (
-        <Modal onClose={() => setShowUpload(false)}>
-          <CSVUpload />
-        </Modal>
-      )}
     </div>
   );
 };

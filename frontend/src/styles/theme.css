@@ -1,0 +1,140 @@
+:root {
+  /* Color Palette */
+  --color-primary: #00E5FF;
+  --color-secondary: #1DE9B6;
+  --color-accent: #2979FF;
+  --color-bg-dark: #0B192F;
+  --color-bg-light: #101F33;
+  --color-text-primary: #E0F7FA;
+  --color-text-secondary: #90A4AE;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-overlay: rgba(255, 255, 255, 0.08);
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Typography */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 255, 255, 0.1);
+  --shadow-md: 0 12px 28px rgba(0, 255, 255, 0.1);
+  --shadow-lg: 0 20px 40px rgba(0, 255, 255, 0.15);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Chart Styles */
+.chart-container {
+  position: relative;
+  padding: var(--spacing-md);
+}
+
+.chart-segment {
+  transition: transform var(--transition-normal);
+}
+
+.chart-segment:hover {
+  transform: scale(1.02);
+  filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.4));
+}
+
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+/* Typography */
+.section-header {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Chart Colors */
+.chart-primary {
+  fill: var(--color-primary);
+  stroke: var(--color-primary);
+}
+
+.chart-secondary {
+  fill: var(--color-secondary);
+  stroke: var(--color-secondary);
+}
+
+.chart-accent {
+  fill: var(--color-accent);
+  stroke: var(--color-accent);
+}
+
+/* Chart Grid */
+.chart-grid {
+  stroke: var(--color-border);
+  stroke-width: 0.5;
+}
+
+/* Chart Area Fill */
+.chart-area {
+  fill: rgba(0, 229, 255, 0.15);
+}
+
+/* Chart Line */
+.chart-line {
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Chart Point */
+.chart-point {
+  fill: var(--color-primary);
+  stroke: var(--color-bg-dark);
+  stroke-width: 2;
+  transition: all var(--transition-normal);
+}
+
+.chart-point:hover {
+  transform: scale(1.5);
+  filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.4));
+} 

@@ -1,144 +1,77 @@
 import React from 'react';
 import {
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   Area,
-  AreaChart,
-  TooltipProps
+  AreaChart
 } from 'recharts';
 import type { SalesTrends } from '../services/api';
-import { format, parseISO } from 'date-fns';
-import ErrorBoundary from './ErrorBoundary';
-
-type Granularity = 'day' | 'week' | 'biweek' | 'month' | 'quarter';
 
 interface Props {
   data: SalesTrends;
-  startDate?: string;
-  endDate?: string;
-  granularity: Granularity;
+  granularity: string;
+  loading?: boolean;
 }
 
-type TickFormatter = (period: string) => string;
-
-function getTickFormat(granularity: Granularity): TickFormatter {
-  switch (granularity) {
-    case 'day':
-      return (period: string) => {
-        try { return format(parseISO(period), 'MMM d'); } catch { return period; }
-      };
-    case 'week':
-      return (period: string) => {
-        try { return 'Wk of ' + format(parseISO(period), 'MMM d'); } catch { return period; }
-      };
-    case 'biweek':
-      return (period: string) => {
-        try { return 'BiWk of ' + format(parseISO(period), 'MMM d'); } catch { return period; }
-      };
-    case 'month':
-      return (period: string) => {
-        try { return format(parseISO(period + '-01'), 'MMM yyyy'); } catch { return period; }
-      };
-    case 'quarter':
-      return (period: string) => {
-        const [year, q] = period.split('-Q');
-        return q && year ? `Q${q} ${year}` : period;
-      };
-    default:
-      return (period: string) => period;
-  }
-}
-
-interface CustomTooltipProps extends TooltipProps<number, string> {
-  active?: boolean;
-  payload?: Array<{
-    value: number;
-    dataKey: string;
-  }>;
-  label?: string;
-  tickFormat: TickFormatter;
-}
-
-const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label, tickFormat }) => {
-  if (!active || !payload?.length || !label) return null;
-  const formatCurrency = (value: number) => `$${value.toFixed(2)}`;
-  return (
-    <div className="bg-[rgba(16,24,39,0.95)] border border-[rgba(0,229,255,0.12)] rounded-[8px] p-3 shadow-[0_4px_24px_0_rgba(0,229,255,0.12)] backdrop-blur-[12px]">
-      <p className="text-[#E0F7FA] text-xs mb-1">{tickFormat(label)}</p>
-      <p className="text-[#00E5FF] text-xs">
-        This Period: {formatCurrency(payload[0]?.value ?? 0)}
-      </p>
-      {payload[1] && (
-        <p className="text-[#E0F7FA] text-xs">
-          Previous Period: {formatCurrency(payload[1].value ?? 0)}
-        </p>
-      )}
-    </div>
-  );
-};
-
-const SalesTrendsChart: React.FC<Props> = ({ data, granularity }) => {
-  // Defensive: Ensure period exists on each TrendPoint
-  const merged = (data.this_period || []).map((tp, i) => ({
-    period: (tp as any).period || (tp as any).week_start || '',
-    this_period: typeof tp.total_sales === 'number' ? tp.total_sales : 0,
-    prev_period: typeof data.prev_period?.[i]?.total_sales === 'number' ? data.prev_period[i].total_sales : 0,
+const SalesTrendsChart: React.FC<Props> = ({ data, granularity, loading = false }) => {
+  // Generate placeholder data if no data exists
+  const placeholderData = Array.from({ length: 7 }, (_, i) => ({
+    period: `Day ${i + 1}`,
+    total_sales: Math.random() * 1000 + 500,
   }));
-  const tickFormat = getTickFormat(granularity);
-  const formatCurrency = (value: number) => `$${value.toFixed(2)}`;
+
+  const chartData = data.this_period.length > 0 ? data.this_period : placeholderData;
+
   return (
-    <div className="w-full h-full min-h-[300px] flex flex-col">
+    <div className="chart-container h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={merged} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+        <AreaChart
+          data={chartData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
           <defs>
-            <linearGradient id="colorThisPeriod" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#00E5FF" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#00E5FF" stopOpacity={0.15}/>
-            </linearGradient>
-            <linearGradient id="colorPrevPeriod" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#E0F7FA" stopOpacity={0.5}/>
-              <stop offset="95%" stopColor="#E0F7FA" stopOpacity={0.05}/>
+            <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0.1}/>
             </linearGradient>
           </defs>
+          <CartesianGrid 
+            strokeDasharray="3 3" 
+            stroke="var(--color-border)"
+            opacity={0.3}
+          />
           <XAxis 
             dataKey="period" 
-            tickFormatter={tickFormat}
-            stroke="#E0F7FA"
-            strokeWidth={1}
-            tick={{ fill: '#E0F7FA', fontSize: 11 }}
-            axisLine={{ stroke: 'rgba(224,247,250,0.2)' }}
-            tickLine={{ stroke: 'rgba(224,247,250,0.2)' }}
+            stroke="var(--color-text-secondary)"
+            tick={{ fontSize: 12 }}
           />
           <YAxis 
-            tickFormatter={formatCurrency}
-            stroke="#E0F7FA"
-            strokeWidth={1}
-            tick={{ fill: '#E0F7FA', fontSize: 11 }}
-            axisLine={{ stroke: 'rgba(224,247,250,0.2)' }}
-            tickLine={{ stroke: 'rgba(224,247,250,0.2)' }}
+            stroke="var(--color-text-secondary)"
+            tick={{ fontSize: 12 }}
+            tickFormatter={(value) => `$${value.toLocaleString()}`}
           />
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(224,247,250,0.1)" />
-          <Tooltip content={<CustomTooltip tickFormat={tickFormat} />} />
-          <Area 
-            type="monotone" 
-            dataKey="this_period" 
-            stroke="#00E5FF" 
-            strokeWidth={3}
-            fillOpacity={1} 
-            fill="url(#colorThisPeriod)"
-            style={{ filter: 'drop-shadow(0 0 12px rgba(0,229,255,0.25))' }}
+          <Tooltip
+            contentStyle={{
+              backgroundColor: 'var(--color-bg-dark)',
+              border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)',
+              color: 'var(--color-text-primary)',
+            }}
+            formatter={(value: number) => [`$${value.toLocaleString()}`, 'Sales']}
           />
-          <Area 
-            type="monotone" 
-            dataKey="prev_period" 
-            stroke="#E0F7FA" 
+          <Area
+            type="monotone"
+            dataKey="total_sales"
+            stroke="var(--color-primary)"
             strokeWidth={2}
-            fillOpacity={1} 
-            fill="url(#colorPrevPeriod)"
-            style={{ filter: 'drop-shadow(0 0 8px rgba(224,247,250,0.15))' }}
+            fillOpacity={1}
+            fill="url(#colorSales)"
+            className="chart-area"
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -146,10 +79,4 @@ const SalesTrendsChart: React.FC<Props> = ({ data, granularity }) => {
   );
 };
 
-export default function SalesTrendsChartWithErrorBoundary(props: Props) {
-  return (
-    <ErrorBoundary>
-      <SalesTrendsChart {...props} />
-    </ErrorBoundary>
-  );
-} 
+export default SalesTrendsChart; 

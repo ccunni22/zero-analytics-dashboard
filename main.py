@@ -198,17 +198,28 @@ app.add_middleware(
         "http://localhost:5173",
         "http://localhost:5174",
         "http://localhost:5175",
-        "https://zero-analytics-dashboard.vercel.app",
-        "https://zero-analytics-dashboard-nvj4qq7pe.vercel.app",
-        "https://*.vercel.app",  # Allow all Vercel preview deployments
-        frontend_url  # Allow the configured frontend URL
+        frontend_url,
+        # Add Vercel preview deployment patterns
+        "https://*.vercel.app",
+        "https://zero-analytics-dashboard-*.vercel.app",
     ],
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods
-    allow_headers=["*"],  # Allow all headers
-    expose_headers=["*"],  # Expose all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"],
     max_age=3600,  # Cache preflight requests for 1 hour
 )
+
+# Add security headers middleware
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+    return response
 
 # Enhanced column aliases with more variations and common POS system formats
 COLUMN_ALIASES = {
