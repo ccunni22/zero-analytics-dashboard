@@ -222,6 +222,7 @@ async def shutdown_event():
 
 # Configure CORS
 frontend_url = os.getenv("FRONTEND_URL", "https://zero-analytics-dashboard.vercel.app")
+# Explicitly add deployed Vercel URLs for CORS (wildcards are not supported by browsers)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -238,9 +239,10 @@ app.add_middleware(
         "http://localhost:5178",
         "http://localhost:5179",
         "http://localhost:5180",
-        frontend_url,
-        "https://*.vercel.app",
-        "https://zero-analytics-dashboard-*.vercel.app",
+        frontend_url,  # from env, for flexibility
+        "https://zero-analytics-dashboard.vercel.app",  # main production
+        "https://zero-analytics-dashboard-ipxmuc34s.vercel.app",  # your current deployment
+        # Add any other preview/production URLs as needed
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -503,8 +505,7 @@ async def get_sales(request: Request, start_date: Optional[str] = Query(None), e
 @app.get("/sales/heatmap")
 def get_sales_heatmap(
     start_date: str,
-    end_date: str,
-    category: str = "ALL"
+    end_date: str
 ):
     try:
         # Validate date range
@@ -513,11 +514,10 @@ def get_sales_heatmap(
         # Call Supabase RPC function
         params = {
             'start_date': start.date().isoformat(),
-            'end_date': end.date().isoformat(),
-            'category': category
+            'end_date': end.date().isoformat()
         }
         
-        response = supabase.rpc('get_sales_heatmap_by_date', params).execute()
+        response = supabase.rpc('get_sales_heatmap', params).execute()
         
         # Transform data for frontend
         transformed_data = []
