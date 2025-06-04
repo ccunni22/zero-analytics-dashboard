@@ -17,10 +17,27 @@ import re
 from dateutil.parser import parse as parse_date
 from dateutil.relativedelta import relativedelta
 import calendar
+import subprocess
+import signal
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def cleanup_processes():
+    """Clean up any existing processes on ports 5173 and 8000"""
+    try:
+        # Kill processes on port 5173 (Vite)
+        subprocess.run(['lsof', '-ti', ':5173'], capture_output=True, text=True)
+        subprocess.run(['pkill', '-f', 'vite'], capture_output=True)
+        
+        # Kill processes on port 8000 (FastAPI)
+        subprocess.run(['lsof', '-ti', ':8000'], capture_output=True, text=True)
+        subprocess.run(['pkill', '-f', 'uvicorn'], capture_output=True)
+        
+        logger.info("Successfully cleaned up existing processes")
+    except Exception as e:
+        logger.warning(f"Error during cleanup: {str(e)}")
 
 # SQL function for sales trends
 SALES_TRENDS_FUNCTION = """
@@ -76,7 +93,7 @@ $$ LANGUAGE plpgsql;
 """
 
 ITEM_ANALYTICS_FUNCTION = """
-CREATE OR REPLACE FUNCTION get_item_analytics(start_date date, end_date date, item_limit integer, order_direction text)
+CREATE OR REPLACE FUNCTION get_item_analytics(start_date date, end_date date, item_limit integer)
 RETURNS TABLE (
     item_name text,
     total_quantity bigint,
@@ -84,7 +101,8 @@ RETURNS TABLE (
     order_count bigint,
     avg_order_value numeric,
     weekly_trend numeric,
-    is_dead_stock boolean
+    is_dead_stock boolean,
+    "Sales Category" text
 ) AS $$
 BEGIN
     RETURN QUERY
@@ -94,10 +112,11 @@ BEGIN
             SUM("Quantity") as total_quantity,
             SUM("Gross Price") as total_sales,
             COUNT(DISTINCT "Order ID") as order_count,
-            SUM("Gross Price") / NULLIF(COUNT(DISTINCT "Order ID"), 0) as avg_order_value
+            SUM("Gross Price") / NULLIF(COUNT(DISTINCT "Order ID"), 0) as avg_order_value,
+            "Sales Category"
         FROM "Zero CSV Data"
         WHERE DATE("Order Date") BETWEEN start_date AND end_date
-        GROUP BY "Menu Item"
+        GROUP BY "Menu Item", "Sales Category"
     ),
     weekly_trends AS (
         SELECT 
@@ -125,7 +144,8 @@ BEGIN
             WHEN wt.prev_week_quantity = 0 THEN NULL
             ELSE ROUND(((wt.last_week_quantity - wt.prev_week_quantity)::numeric / wt.prev_week_quantity * 100)::numeric, 1)
         END as weekly_trend,
-        is.total_quantity < 5 as is_dead_stock
+        is.total_quantity < 5 as is_dead_stock,
+        is."Sales Category"
     FROM item_stats is
     LEFT JOIN weekly_trends wt ON wt.item_name = is.item_name
     ORDER BY is.total_quantity DESC
@@ -190,16 +210,35 @@ except Exception as e:
 
 app = FastAPI()
 
+@app.on_event("startup")
+async def startup_event():
+    """Clean up processes on startup"""
+    cleanup_processes()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Clean up processes on shutdown"""
+    cleanup_processes()
+
 # Configure CORS
 frontend_url = os.getenv("FRONTEND_URL", "https://zero-analytics-dashboard.vercel.app")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "http://localhost:4300",
+        "http://127.0.0.1:4300",
+        "http://localhost:4173",
+        "http://127.0.0.1:4173",
         "http://localhost:5173",
+        "http://127.0.0.1:5173",
         "http://localhost:5174",
         "http://localhost:5175",
+        "http://localhost:5176",
+        "http://localhost:5177",
+        "http://localhost:5178",
+        "http://localhost:5179",
+        "http://localhost:5180",
         frontend_url,
-        # Add Vercel preview deployment patterns
         "https://*.vercel.app",
         "https://zero-analytics-dashboard-*.vercel.app",
     ],
@@ -437,7 +476,7 @@ def validate_date_range(start_date: str, end_date: str) -> tuple[datetime, datet
 async def get_sales(request: Request, start_date: Optional[str] = Query(None), end_date: Optional[str] = Query(None), limit: int = Query(1000, ge=1, le=10000), offset: int = Query(0, ge=0)):
     logger.info(f"Received /sales request: start_date={start_date}, end_date={end_date}, limit={limit}, offset={offset}")
     try:
-        query = supabase.table("Zero CSV Data").select("*", count="exact").limit(limit).offset(offset)
+        query = supabase.table("Zero CSV Data").select("*", count="exact").range(offset, offset + limit - 1)
         if start_date and end_date:
             start_dt, end_dt = validate_date_range(start_date, end_date)
             query = query.gte("Order Date", start_dt.strftime("%Y-%m-%dT00:00:00+00:00"))
@@ -462,36 +501,41 @@ async def get_sales(request: Request, start_date: Optional[str] = Query(None), e
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/sales/heatmap")
-async def sales_heatmap(request: Request, start_date: str = Query(...), end_date: str = Query(...), category: str = Query("ALL")):
+def get_sales_heatmap(
+    start_date: str,
+    end_date: str,
+    category: str = "ALL"
+):
     try:
-        start_dt, end_dt = validate_date_range(start_date, end_date)
+        # Validate date range
+        start, end = validate_date_range(start_date, end_date)
+        
+        # Call Supabase RPC function
         params = {
-            'start_date': start_date,
-            'end_date': end_date,
+            'start_date': start.date().isoformat(),
+            'end_date': end.date().isoformat(),
             'category': category
         }
-        # Use the new function
-        response = supabase.rpc(
-            "get_sales_heatmap_by_date",
-            params
-        ).execute()
-        if not response.data:
-            return {"data": [], "message": "No heatmap data available for the specified date range"}
         
-        # Transform to {date, hours: [q0, q1, ..., q23]}
-        date_map = defaultdict(lambda: [0]*24)
+        response = supabase.rpc('get_sales_heatmap_by_date', params).execute()
+        
+        # Transform data for frontend
+        transformed_data = []
         for row in response.data:
-            date = row['date']
-            hour = row['hour_of_day']
-            qty = row['total_quantity']
-            date_map[date][hour] = qty
+            transformed_row = {
+                "date": row["date"],  # Date is already a string from Supabase
+                "day_of_week": row["day_of_week"],
+                "hour_of_day": row["hour_of_day"],
+                "total_sales": float(row["total_sales"])
+            }
+            transformed_data.append(transformed_row)
+            
+        # Log transformed data
+        logger.info(f"Transformed data for frontend: {transformed_data[:3]}")  # Log first 3 items
+        logger.info(f"Total number of data points: {len(transformed_data)}")
         
-        # Convert to list of objects with date and hours array
-        result = [
-            {"date": date, "hours": hours}
-            for date, hours in sorted(date_map.items())
-        ]
-        return {"data": result}
+        return {"data": transformed_data}
+        
     except Exception as e:
         logger.error(f"Error in /sales/heatmap endpoint: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -505,18 +549,39 @@ def get_item_analytics(
     params = {
         'start_date': start_date,
         'end_date': end_date,
-        'item_limit': int(limit)
+        'item_limit': limit
     }
     try:
         response = supabase.rpc('get_item_analytics', params).execute()
-        # Restore the expected response structure for the frontend
+        data = response.data
+        logger.debug(f"Raw response data type: {type(data)}")
+        logger.debug(f"Raw response data: {data}")
+
+        # If data is a dict with 'food' and 'alcohol', just return it
+        if isinstance(data, dict) and "food" in data and "alcohol" in data:
+            return {
+                "date_range": {
+                    "start": start_date,
+                    "end": end_date
+                },
+                **data
+            }
+
+        # (Optional) fallback for legacy list format
+        if isinstance(data, list):
+            # ... old list-processing logic could go here if needed ...
+            logger.warning("Received list data from get_item_analytics, but expected dict. Returning empty.")
+
+        # If data is not in expected format, return empty
+        logger.warning(f"Unexpected data format from get_item_analytics: {data}")
         return {
             "date_range": {
                 "start": start_date,
                 "end": end_date
             },
-            "food": response.data.get("food", {"top_items": [], "bottom_items": []}),
-            "alcohol": response.data.get("alcohol", {"top_items": [], "bottom_items": []})
+            "food": {"top_items": [], "bottom_items": []},
+            "alcohol": {"top_items": [], "bottom_items": []},
+            "error": "No item analytics data available."
         }
     except Exception as e:
         logger.error(f"Error in /sales/items endpoint: {str(e)}", exc_info=True)
@@ -548,21 +613,30 @@ async def sales_trends(
         }
         print("DEBUG: Params sent to get_sales_trends:", params)
         response = supabase.rpc('get_sales_trends', params).execute()
+        print("DEBUG: Raw response from Supabase:", response.data)
+        
         if not response.data:
+            print("DEBUG: No data returned from Supabase")
             return {"this_period": [], "prev_period": []}
+            
         # Transform the data into the format expected by the frontend
         this_period = []
         prev_period = []
         for row in response.data:
-            this_period.append({
+            this_period_point = {
                 "period": row.get("period"),
-                "total_sales": row.get("total_sales", 0)
-            })
-            prev_period.append({
+                "total_sales": float(row.get("total_sales", 0))
+            }
+            prev_period_point = {
                 "period": row.get("period"),
-                "total_sales": row.get("prev_period_sales", 0)
-            })
-        return {"this_period": this_period, "prev_period": prev_period}
+                "total_sales": float(row.get("prev_period_sales", 0))
+            }
+            this_period.append(this_period_point)
+            prev_period.append(prev_period_point)
+            
+        result = {"this_period": this_period, "prev_period": prev_period}
+        print("DEBUG: Transformed data for frontend:", result)
+        return result
     except Exception as e:
         logger.error(f"Error in sales_trends: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
@@ -666,12 +740,14 @@ async def get_sales_summary(request: Request, start_date: str = Query(...), end_
         total_res = supabase.rpc('get_sales_summary', params_all).execute()
         food_res = supabase.rpc('get_sales_summary', params_food).execute()
         alcohol_res = supabase.rpc('get_sales_summary', params_alcohol).execute()
-        if not (total_res.data and food_res.data and alcohol_res.data):
-            return JSONResponse({"error": "No data found"}, status_code=404)
+        def safe_get(data):
+            return data[0] if data and len(data) > 0 else {
+                "total_sales": 0, "total_orders": 0, "average_order_value": 0, "gross_sales": 0, "total_items_sold": 0, "void_rate": 0
+            }
         return {
-            "total": total_res.data[0],
-            "food": food_res.data[0],
-            "alcohol": alcohol_res.data[0]
+            "total": safe_get(total_res.data),
+            "food": safe_get(food_res.data),
+            "alcohol": safe_get(alcohol_res.data)
         }
     except Exception as e:
         logger.error(f"Error in get_sales_summary: {str(e)}", exc_info=True)
