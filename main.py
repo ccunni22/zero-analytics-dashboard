@@ -242,6 +242,7 @@ app.add_middleware(
         frontend_url,  # from env, for flexibility
         "https://zero-analytics-dashboard.vercel.app",  # main production
         "https://zero-analytics-dashboard-ipxmuc34s.vercel.app",  # your current deployment
+        "https://zero-analytics-dashboard-llonzlava.vercel.app",  # current preview deployment
         # Add any other preview/production URLs as needed
     ],
     allow_credentials=True,
