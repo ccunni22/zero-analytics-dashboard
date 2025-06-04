@@ -1,12 +1,12 @@
 :root {
   /* Color Palette */
-  --color-primary: #00E5FF;
-  --color-secondary: #1DE9B6;
-  --color-accent: #2979FF;
-  --color-bg-dark: #0B192F;
-  --color-bg-light: #101F33;
-  --color-text-primary: #E0F7FA;
-  --color-text-secondary: #90A4AE;
+  --color-primary: #00e5ff;
+  --color-secondary: #1de9b6;
+  --color-accent: #2979ff;
+  --color-bg-dark: #0b192f;
+  --color-bg-light: #101f33;
+  --color-text-primary: #e0f7fa;
+  --color-text-secondary: #90a4ae;
   --color-border: rgba(255, 255, 255, 0.06);
   --color-overlay: rgba(255, 255, 255, 0.08);
 
@@ -57,18 +57,42 @@
 }
 
 /* Chart Styles */
-.chart-container {
-  position: relative;
-  padding: var(--spacing-md);
+.chart-container,
+.donut-container,
+.donut-chart,
+.donut-chart-wrapper,
+.chart-box {
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  padding: 0 !important;
+  outline: none !important;
 }
 
 .chart-segment {
   transition: transform var(--transition-normal);
+  stroke: none !important;
+  filter: none !important;
+  outline: none !important;
 }
 
 .chart-segment:hover {
   transform: scale(1.02);
   filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.4));
+}
+
+/* Add specific overrides for Recharts elements */
+.recharts-wrapper,
+.recharts-surface,
+.recharts-pie,
+.recharts-pie-sector {
+  stroke: none !important;
+  filter: none !important;
+  outline: none !important;
+}
+
+.recharts-pie-sector:hover {
+  filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.4)) !important;
 }
 
 /* Grid Layout */
@@ -137,4 +161,205 @@
 .chart-point:hover {
   transform: scale(1.5);
   filter: drop-shadow(0 0 6px rgba(0, 255, 255, 0.4));
-} 
+}
+
+.sales-trends-card {
+  height: auto;
+  min-height: 350px;
+  max-height: 400px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.sales-summary-card {
+  height: 100%;
+  min-height: 350px;
+  max-height: 400px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sales-summary {
+  flex: 1 1 0%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.kpi-full {
+  flex: none;
+  width: 100%;
+  align-self: stretch;
+  margin: 0 auto;
+}
+
+.kpi-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  height: 50%;
+}
+
+.kpi-row .kpi-card {
+  flex: 1;
+  min-width: 0;
+}
+
+.kpi-card {
+  padding: 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dashboard-top-row {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  height: 400px;
+}
+
+.sales-trends {
+  flex: 2 1 0%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sales-summary-card,
+.sales-trends-card {
+  min-height: 0 !important;
+  max-height: none !important;
+  height: 100% !important;
+  padding: 0 !important;
+}
+
+.heatmap-card {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  height: 350px;
+}
+
+.donut-chart-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.donut-legend {
+  margin-top: auto;
+  padding-bottom: 16px;
+  font-size: 13px;
+  color: #E0F7FA;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background: none;
+  box-shadow: none;
+  border: none;
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+.donut-legend ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.donut-legend li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  font-family: "Share Tech Mono", Consolas, monospace;
+  letter-spacing: 0.5px;
+  background: none;
+  border: none;
+}
+
+.label-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.api-card {
+  background: rgba(255, 255, 255, 0.015);
+  border-radius: 16px;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.1);
+}
+
+.api-card:hover {
+  box-shadow: 0 0 22px rgba(0, 229, 255, 0.45), 0 0 8px rgba(0, 229, 255, 0.25);
+  transform: translateY(-2px);
+  z-index: 1;
+}
+
+/* Dashboard Toolbar */
+.dashboard-toolbar {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 229, 255, 0.08);
+}
+
+.dashboard-toolbar h1 {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dashboard-toolbar .text-sm {
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.heatmap-tooltip {
+  position: absolute;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(0, 229, 255, 0.08);
+  color: #E0F7FA;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}

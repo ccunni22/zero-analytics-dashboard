@@ -1,11 +1,11 @@
 :root {
   --color-bg: #101827;
   --color-card: rgba(255, 255, 255, 0.05);
-  --color-primary: #00E5FF;
-  --color-accent: #E0F7FA;
+  --color-primary: #00e5ff;
+  --color-accent: #e0f7fa;
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-blue: rgba(0, 229, 255, 0.12);
-  --color-text: #E0F7FA;
+  --color-text: #e0f7fa;
   --shadow-glow: 0 2px 16px 0 rgba(94, 203, 250, 0.08);
   --border-radius: 10px;
   --blur: 12px;
@@ -14,7 +14,7 @@
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: 'Inter', 'Avenir', 'Segoe UI', Arial, sans-serif;
+  font-family: "Inter", "Avenir", "Segoe UI", Arial, sans-serif;
   min-height: 100vh;
 }
 
@@ -55,4 +55,4 @@ body {
   background: var(--color-primary);
   border-radius: 8px;
   opacity: 0.5;
-} 
+}

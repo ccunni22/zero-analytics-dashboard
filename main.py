@@ -506,7 +506,8 @@ async def get_sales(request: Request, start_date: Optional[str] = Query(None), e
 @app.get("/sales/heatmap")
 def get_sales_heatmap(
     start_date: str,
-    end_date: str
+    end_date: str,
+    category: str = "ALL"
 ):
     try:
         # Validate date range
@@ -515,10 +516,11 @@ def get_sales_heatmap(
         # Call Supabase RPC function
         params = {
             'start_date': start.date().isoformat(),
-            'end_date': end.date().isoformat()
+            'end_date': end.date().isoformat(),
+            'category': category
         }
         
-        response = supabase.rpc('get_sales_heatmap', params).execute()
+        response = supabase.rpc('get_sales_heatmap_by_date', params).execute()
         
         # Transform data for frontend
         transformed_data = []

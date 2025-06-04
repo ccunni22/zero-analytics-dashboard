@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
+  width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 0;
   text-align: center;
 }
 
@@ -56,29 +56,46 @@
   box-sizing: border-box;
 }
 .donut-legend {
-  max-height: 80px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e0f7fa;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 12px 8px 12px;
+  max-height: 90px;
   overflow-y: auto;
-  margin-top: 12px;
+  margin-top: 0;
 }
-.donut-legend div {
-  word-break: break-word;
+.donut-legend li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 2px;
+  font-family: "Share Tech Mono", Consolas, monospace;
+  letter-spacing: 0.5px;
 }
-.dashboard-card, .card, .donut-card {
+.dashboard-card,
+.card,
+.donut-card {
   padding-bottom: 20px;
 }
 
 .dashboard-card {
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 20px rgba(0,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 20px rgba(0, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 16px;
-  transition: box-shadow 0.2s, border 0.2s;
+  transition:
+    box-shadow 0.2s,
+    border 0.2s;
+  min-width: 0;
 }
 .dashboard-card:hover {
-  box-shadow: 0 12px 32px rgba(0,229,255,0.18);
-  border: 1px solid rgba(0,229,255,0.12);
+  box-shadow: 0 12px 32px rgba(0, 229, 255, 0.18);
+  border: 1px solid rgba(0, 229, 255, 0.12);
 }
 .gap-4 {
   gap: 16px !important;
@@ -88,4 +105,47 @@
 }
 .mt-2 {
   margin-top: 8px !important;
+}
+
+.dashboard-border {
+  width: 100%;
+  min-height: 100vh;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  position: relative;
+}
+
+.dashboard-content {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(11, 31, 51, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dashboard-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 229, 255, 0.08) 0%,
+    rgba(0, 229, 255, 0.02) 40%,
+    transparent 85%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dashboard-top-row {
+  min-width: 0;
+}
+
+.donut-chart {
+  margin-bottom: 8px;
 }

@@ -1,0 +1,26 @@
+{
+    "sensor": {
+        "port": "/dev/tty.SLAB_USBtoUART",
+        "baudrate": 115200,
+        "timeout": 1
+    },
+    "data_collection": {
+        "interval": 1,
+        "duration": 300,
+        "save_raw": true
+    },
+    "zones": {
+        "entry": {
+            "x_min": -2,
+            "x_max": 2,
+            "y_min": 0,
+            "y_max": 3
+        },
+        "main_area": {
+            "x_min": -5,
+            "x_max": 5,
+            "y_min": 3,
+            "y_max": 8
+        }
+    }
+} 

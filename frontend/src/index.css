@@ -1,10 +1,40 @@
-@import './styles/animations.css';
-@import './theme.css';
-@import './styles/scrollbar.css';
+@import "./styles/animations.css";
+@import "./theme.css";
+@import "./styles/scrollbar.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 229, 255, 0.08) 0%,
+    rgba(0, 229, 255, 0.02) 40%,
+    #0b1f33 85%,
+    #0b1f33 100%
+  );
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+body {
+  color: #e3eaf3;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 /* Remove conflicting background and card styles */
 :root {
@@ -13,20 +43,6 @@
   /* --accent-color: #0fa; */
   /* --text-primary: #ffffff; */
   /* --text-secondary: #a0aec0; */
-}
-
-body {
-  margin: 0;
-  background: #172133;
-  color: #e3eaf3;
-  min-height: 100vh;
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif; */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* background-color: var(--primary-bg); */
-  /* color: var(--text-primary); */
 }
 
 /* Custom scrollbar */

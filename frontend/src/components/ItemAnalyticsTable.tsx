@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ItemAnalytics } from '../services/api';
+import React from "react";
+import type { ItemAnalytics } from "../services/api";
 
 interface Props {
   data: ItemAnalytics[];
@@ -25,12 +25,19 @@ const ItemAnalyticsTable: React.FC<Props> = ({ data }) => {
         </thead>
         <tbody>
           {safeData.map((item, idx) => (
-            <tr key={item.item_name + idx} className="border-b border-gray-800 hover:bg-gray-700/50">
+            <tr
+              key={item.item_name + idx}
+              className="border-b border-gray-800 hover:bg-gray-700/50"
+            >
               <td className="px-4 py-3">{item.item_name}</td>
               <td className="px-4 py-3 text-right">{item.total_quantity}</td>
-              <td className="px-4 py-3 text-right">{formatCurrency(item.total_sales)}</td>
+              <td className="px-4 py-3 text-right">
+                {formatCurrency(item.total_sales)}
+              </td>
               <td className="px-4 py-3 text-right">{item.order_count}</td>
-              <td className="px-4 py-3 text-right">{formatCurrency(item.avg_order_value)}</td>
+              <td className="px-4 py-3 text-right">
+                {formatCurrency(item.avg_order_value)}
+              </td>
               <td className="px-4 py-3 text-center">{item.category}</td>
               <td className="px-4 py-3 text-center">{item.rank_type}</td>
             </tr>
@@ -41,4 +48,4 @@ const ItemAnalyticsTable: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default ItemAnalyticsTable; 
+export default ItemAnalyticsTable;

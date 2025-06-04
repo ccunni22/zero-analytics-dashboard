@@ -130,6 +130,54 @@ Backend:
 - `/sales/items`: Get item analytics
 - `/upload-csv`: Upload CSV data
 
+## Development Server Management
+
+### Quick Start
+To start both frontend and backend servers:
+```bash
+./start.sh
+```
+
+To stop all development servers:
+```bash
+./cleanup.sh
+```
+
+### Manual Management
+If you need to start servers manually:
+
+1. Backend (FastAPI):
+```bash
+cd backend
+python3 -m uvicorn main:app --reload --port 8000
+```
+
+2. Frontend (Vite):
+```bash
+cd frontend
+npm run dev -- --port 5173 --strictPort
+```
+
+### Troubleshooting
+If you encounter port conflicts or stale processes:
+
+1. Run the cleanup script:
+```bash
+./cleanup.sh
+```
+
+2. Check for running processes:
+```bash
+lsof -i :5173  # Check Vite
+lsof -i :8000  # Check FastAPI
+```
+
+3. If issues persist, you can manually kill processes:
+```bash
+kill -9 $(lsof -ti :5173)  # Kill Vite
+kill -9 $(lsof -ti :8000)  # Kill FastAPI
+```
+
 ## Contributing
 
 1. Fork the repository

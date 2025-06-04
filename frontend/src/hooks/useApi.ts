@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 interface UseApiState<T> {
   data: T | null;
@@ -13,7 +13,7 @@ interface UseApiResult<T> extends UseApiState<T> {
 
 export function useApi<T>(
   apiFunction: (...args: any[]) => Promise<T>,
-  initialData: T | null = null
+  initialData: T | null = null,
 ): UseApiResult<T> {
   const [state, setState] = useState<UseApiState<T>>({
     data: initialData,
@@ -31,11 +31,12 @@ export function useApi<T>(
         setState({
           data: null,
           loading: false,
-          error: error instanceof Error ? error : new Error('An error occurred'),
+          error:
+            error instanceof Error ? error : new Error("An error occurred"),
         });
       }
     },
-    [apiFunction]
+    [apiFunction],
   );
 
   const reset = useCallback(() => {
@@ -49,4 +50,4 @@ export function useApi<T>(
   };
 }
 
-export default useApi; 
+export default useApi;

@@ -29,15 +29,22 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: 5173,
-      strictPort: false,
+      port: 4300,
+      strictPort: true,
       host: true,
+      hmr: {
+        overlay: true,
+      },
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react-router-dom', 'recharts', 'd3', 'axios'],
+      exclude: [],
     },
     // Only expose specific environment variables
     define: {
-      'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
-      'import.meta.env.VITE_API_URL_PROD': JSON.stringify(env.VITE_API_URL_PROD),
-      'import.meta.env.VITE_ENABLE_CSV_UPLOAD': JSON.stringify(env.VITE_ENABLE_CSV_UPLOAD),
+      'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL || 'http://localhost:8000'),
+      'import.meta.env.VITE_ENABLE_CSV_UPLOAD': JSON.stringify(env.VITE_ENABLE_CSV_UPLOAD || 'true'),
+      'import.meta.env.VITE_ENABLE_EXPORT': JSON.stringify(env.VITE_ENABLE_EXPORT || 'true'),
     },
   }
 })
